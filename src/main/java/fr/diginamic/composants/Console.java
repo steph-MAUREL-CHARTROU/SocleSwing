@@ -41,6 +41,9 @@ public class Console {
 	 */
 	private static Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 
+	/** texte du panneau d'affichage */
+	private StringBuilder contentpane = new StringBuilder();
+	
 	/** afficheur */
 	public static JTextPane afficheur;
 
@@ -162,23 +165,37 @@ public class Console {
 			return Launcher.holder.remove(0);
 		}
 	}
+	
+	public Console html(String text) {
+		contentpane.append(text);
+		afficheur.setText(contentpane.toString());
+		return this;
+	}
 
 	public Console print(String text) {
+		contentpane.append(text);
+		System.out.println(contentpane);
 		appendToPane(text, Color.BLACK);
 		return this;
 	}
 	
 	public Console println(String text) {
+		contentpane.append(text).append("<br>");
+		System.out.println(contentpane);
 		appendToPane(text + "\n", Color.BLACK);
 		return this;
 	}
 
 	public Console print(String text, Color c) {
+		contentpane.append("<span style='color:#").append(String.format("%02X", c.getRed())).append(String.format("%02X", c.getGreen())).append(String.format("%02X", c.getBlue())).append("'>").append(text).append("</span>");
+		System.out.println(contentpane);
 		appendToPane(text, c);
 		return this;
 	}
 
 	public Console println(String text, Color c) {
+		contentpane.append("<span style='color:#").append(String.format("%02X", c.getRed())).append(String.format("%02X", c.getGreen())).append(String.format("%02X", c.getBlue())).append("'>").append(text).append("</span><br>");
+		System.out.println(contentpane);
 		appendToPane(text + "\n", c);
 		return this;
 	}

@@ -111,6 +111,7 @@ public abstract class AbstractApplication extends JFrame {
 		JTextPane afficheur = new JTextPane();
 		afficheur.setBounds(10, 200, width - 40, 390);
 		afficheur.setFont(Console.FONT_18);
+		afficheur.setContentType("text/html");
 		
 		Console.afficheur = afficheur;
 
