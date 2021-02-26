@@ -7,6 +7,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,6 +31,7 @@ public abstract class AbstractApplication extends JFrame {
 	
 	private Map<String, JMenu> categories = new HashMap<>();
 	private JMenuBar menuBar = new JMenuBar();
+	private static ExecutorService threadService = Executors.newFixedThreadPool(3);
 
 	/**
 	 * Constructeur
@@ -77,32 +80,26 @@ public abstract class AbstractApplication extends JFrame {
 				
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
 				}
 				
 				@Override
 				public void mousePressed(MouseEvent e) {
-					menuService.traitement();
-					
+					TraitementMenu tt = new TraitementMenu(menuService);
+					threadService.submit(tt);
 				}
 				
 				@Override
 				public void mouseExited(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
 				}
 				
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
 				}
 				
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					menuService.traitement();
-					
+					TraitementMenu tt = new TraitementMenu(menuService);
+					threadService.submit(tt);
 				}
 			});
 		}

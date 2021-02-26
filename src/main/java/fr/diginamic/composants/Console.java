@@ -7,9 +7,6 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,7 +18,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
-import com.google.common.util.concurrent.SettableFuture;
+import fr.diginamic.Launcher;
 
 /**
  * Classe qui propose quelques méthodes pour construire des composants
@@ -38,16 +35,14 @@ public class Console {
 	 */
 	public static final Font FONT_18 = new Font(Font.SANS_SERIF, Font.PLAIN, 18);
 	/**
-	 * dimension : classe qui fournit des informations sur l'écran du PC utilisé et
-	 * notamment ses dimensions. Cette classe intervient dans le calcul de centrage
-	 * des composants graphiques
+	 * dimension : classe qui fournit des informations sur l'écran du PC utilisé
+	 * et notamment ses dimensions. Cette classe intervient dans le calcul de
+	 * centrage des composants graphiques
 	 */
 	private static Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 
 	/** afficheur */
 	public static JTextPane afficheur;
-	
-	private static ExecutorService threadService = Executors.newFixedThreadPool(3);
 
 	/**
 	 * Constructeur
@@ -80,16 +75,98 @@ public class Console {
 		return (int) ((dimension.getWidth() - component.getWidth()) / 2);
 	}
 
-	public static Saisie input(String question) {
+	public static String input(String question) {
+		
+		JFrame fenetreRecherche = new JFrame();
 
-		// Création de la fenêtre secondaire
-		Saisie saisie = new Saisie();
-		TraitementSaisie tt = new TraitementSaisie(question, saisie);
-		Future<String> future = threadService.submit(tt);
+		// Calcul de son positionnement par défaut et de ses dimensions.
+		// La hauteur dépend notamment du nombre de questions qu'on a à poser
+		// à l'utilisateur
+		fenetreRecherche.setBounds(100, 100, 650, 130);
+
+		// Lorsqu'on ferme une fenêtre secondaire on ne souhaite pas arrêter
+		// l'application
+		// mais simplement la masquer.
+		fenetreRecherche.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		// Dans chaque fenêtre secondaire les composants graphiques seront positionnés
+		// en coordonnées x,y d'où la suppression du layout
+		fenetreRecherche.getContentPane().setLayout(null);
+
+		// Par défaut les fenêtres secondaires ne sont pas visibles.
+		fenetreRecherche.setVisible(false);
+
+		// Calcul des coordonnées x et y pour que la fenêtre secondaire soit centrée.
+		int x = Console.getX(fenetreRecherche);
+		int y = Console.getY(fenetreRecherche);
+		fenetreRecherche.setLocation(x, y);
+
+		// On réalise une boucle sur le tableau de questions pour générer et positionner
+		// les divers éléments sur la fenêtre secondaire
+		int maxWidth = 0;
+
+		// Nombre de carcatères dans le texte de la question
+		int nbCaracteres = question.length();
+
+		// Largeur approximative en pixels du texte à afficher
+		int largeurLabel = nbCaracteres * 10;
+
+		// Création du label
+		JLabel labelSaisie = new JLabel(question);
+		labelSaisie.setBounds(10, 12, largeurLabel, 20);
+		labelSaisie.setFont(Console.FONT_18);
+		fenetreRecherche.add(labelSaisie);
+
+		// Recherche du texte le plus large parmi tous les textes des questions
+		if (largeurLabel > maxWidth) {
+			maxWidth = largeurLabel;
+		}
+
+		// On fait une seconde boucle pour générer les champs de saisie.
+		// Ces champs de saisie seront tous aligner à gauche.
+		// Le positionnement X est le même pour tous les champs de saisie: maxWidth+5
+		JTextField	saisieField = new JTextField();
+		saisieField.setBounds(maxWidth + 5, 6, fenetreRecherche.getWidth() - maxWidth - 40, 30);
+		saisieField.setFont(Console.FONT_18);
+		fenetreRecherche.add(saisieField);
+
+		// Création du bouton Valider
+		JButton valider = new JButton("Valider");
+		valider.setBounds(260, 45, 75, 25);
+
+		// Lorsqu'on clique sur le bouton Valider on appelle
+		// la méthode executeUseCase du contrôleur avec toutes les saisies effectuées
+		// par l'utilisateur en paramètres de la méthode.
+		valider.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// display/center the jdialog when the button is pressed
+				
+				synchronized (Launcher.holder) {
+					Launcher.holder.add(saisieField.getText());
+					Launcher.holder.notify();
+	            }
+	       
+				fenetreRecherche.setVisible(false);
+			}
+		});
+		fenetreRecherche.add(valider);
+		fenetreRecherche.getRootPane().setDefaultButton(valider);
+		fenetreRecherche.setVisible(true);
 		
-		
-		saisie.setFuture(future);
-		return saisie;
+		synchronized (Launcher.holder) {
+
+			// wait for input from field
+			while (Launcher.holder.isEmpty()) {
+				try {
+					Launcher.holder.wait();
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
+				}
+			}
+
+			return Launcher.holder.remove(0);
+			// ....
+		}
 	}
 
 	public Console print(String text) {
@@ -97,13 +174,6 @@ public class Console {
 		return this;
 	}
 	
-	public Console print(Saisie text) {
-		
-		Traitement tt = new Traitement(text);
-		threadService.submit(tt);
-		return this;
-	}
-
 	public Console println(String text) {
 		appendToPane(text + "\n", Color.BLACK);
 		return this;

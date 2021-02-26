@@ -1,5 +1,8 @@
 package fr.diginamic;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.swing.SwingUtilities;
 
 /**
@@ -10,6 +13,7 @@ import javax.swing.SwingUtilities;
  */
 public class Launcher {
 
+	public static final List<String> holder = new LinkedList<String>();
 	/**
 	 * Point d'entrée
 	 * 
