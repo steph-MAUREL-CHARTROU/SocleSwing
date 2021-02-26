@@ -1,8 +1,5 @@
 package fr.diginamic.composants;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
@@ -10,17 +7,12 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
-import javax.swing.KeyStroke;
-
-import fr.diginamic.Application;
 
 public abstract class AbstractApplication extends JFrame {
 
@@ -29,7 +21,7 @@ public abstract class AbstractApplication extends JFrame {
 	private int width = 1400;
 	private int height = 718;
 	
-	private Map<String, JMenu> categories = new HashMap<>();
+	private Map<Integer, JMenu> categories = new HashMap<>();
 	private JMenuBar menuBar = new JMenuBar();
 	private static ExecutorService threadService = Executors.newFixedThreadPool(3);
 
@@ -60,21 +52,18 @@ public abstract class AbstractApplication extends JFrame {
 		setLocation(x, y);
 	}
 	
-	public void addMenuCategory(String categoryName, char mnemonic) {
+	public void addMenu(Integer id, String categoryName) {
 		JMenu menuCateg = new JMenu(categoryName);
-		menuCateg.setMnemonic(mnemonic);
 		menuBar.add(menuCateg);
 		
-		categories.put(categoryName, menuCateg);
+		categories.put(id, menuCateg);
 	}
 	
-	public void addMenuOption(String categoryName, String name, char ctrlChar, MenuService menuService) {
+	public void addMenuOption(Integer id, String name, MenuService menuService) {
 		
-		JMenu menuCateg = categories.get(categoryName);
+		JMenu menuCateg = categories.get(id);
 		if (menuCateg!=null) {
 			JMenuItem menuItem = new JMenuItem(name);
-			menuItem.setAccelerator( KeyStroke.getKeyStroke(ctrlChar, KeyEvent.CTRL_DOWN_MASK) );
-			
 			menuCateg.add(menuItem);
 			menuItem.addMouseListener(new MouseListener() {
 				
@@ -128,30 +117,10 @@ public abstract class AbstractApplication extends JFrame {
 		// Création d'un JScrollPane qui va permettre d'ajouter des barres de défilement
 		// horizontale et verticale avec curseurs à notre afficheur.
 		JScrollPane sp = new JScrollPane(afficheur);
-		sp.setBounds(10, 270, width - 40, 390);
+		sp.setBounds(10, 20, width - 40, 620);
 
 		// On ajoute le JScrollPane à l'interface graphique.
 		this.add(sp);
-
-		// Ajout du bouton en forme de gomme
-		ImageIcon image = new ImageIcon(Application.class.getResource("/gomme.png"));
-		JButton boutonGomme = new JButton(image);
-		boutonGomme.setBounds(width - 62, 236, 30, 30);
-
-		// Ajout d'un listener sur le bouton. Ce listener permet de déclencher une
-		// action lorsque l'utilisateur clique sur le bouton.
-		boutonGomme.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				// L'action ici est d'effacer le contenu de l'afficheur
-				afficheur.setText("");
-			}
-		});
-
-		// Ajout du bouton en forme de gomme à l'interface graphique
-		this.add(boutonGomme);
 		
 		// Ajout de la barre de menu
 		this.setJMenuBar(menuBar);

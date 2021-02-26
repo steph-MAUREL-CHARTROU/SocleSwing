@@ -77,7 +77,7 @@ public class Console {
 
 	public static String input(String question) {
 		
-		JFrame fenetreRecherche = new JFrame();
+		JFrame fenetreRecherche = new JFrame("Question");
 
 		// Calcul de son positionnement par défaut et de ses dimensions.
 		// La hauteur dépend notamment du nombre de questions qu'on a à poser
@@ -134,18 +134,15 @@ public class Console {
 		JButton valider = new JButton("Valider");
 		valider.setBounds(260, 45, 75, 25);
 
-		// Lorsqu'on clique sur le bouton Valider on appelle
-		// la méthode executeUseCase du contrôleur avec toutes les saisies effectuées
-		// par l'utilisateur en paramètres de la méthode.
+		// Lorsqu'on clique sur le bouton Valider on lance un système pour attendre la saisie
+		// par l'utilisateur de la valeur demandée.
 		valider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// display/center the jdialog when the button is pressed
 				
 				synchronized (Launcher.holder) {
 					Launcher.holder.add(saisieField.getText());
 					Launcher.holder.notify();
 	            }
-	       
 				fenetreRecherche.setVisible(false);
 			}
 		});
@@ -154,7 +151,6 @@ public class Console {
 		fenetreRecherche.setVisible(true);
 		
 		synchronized (Launcher.holder) {
-
 			// wait for input from field
 			while (Launcher.holder.isEmpty()) {
 				try {
@@ -163,9 +159,7 @@ public class Console {
 					throw new RuntimeException(e);
 				}
 			}
-
 			return Launcher.holder.remove(0);
-			// ....
 		}
 	}
 
@@ -189,6 +183,11 @@ public class Console {
 		return this;
 	}
 
+	/** Ajoute du texte au conteneur
+	 * @param msg message
+	 * @param c couleur
+	 * @return Console
+	 */
 	protected Console appendToPane(String msg, Color c) {
 		StyleContext sc = StyleContext.getDefaultStyleContext();
 		AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
@@ -201,6 +200,13 @@ public class Console {
 		afficheur.setCharacterAttributes(aset, false);
 		afficheur.replaceSelection(msg);
 		return this;
+	}
+
+	/**
+	 * Efface le contenu de l'afficheur
+	 */
+	public void clear() {
+		afficheur.setText("");
 	}
 
 }

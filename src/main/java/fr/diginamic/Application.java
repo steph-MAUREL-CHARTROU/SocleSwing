@@ -29,8 +29,12 @@ public class Application extends AbstractApplication {
 	 * 
 	 */
 	public void main() {
-		addMenuCategory("?", 'f');
-		addMenuOption("?", "Aide", 'D', new AideService());
+		addMenu(1, "File");
+		addMenu(2, "Recherche");
+		addMenu(3, "Rapports");
 		
+		addMenuOption(1, "Aide", new AideService());
+		addMenuOption(2, "Par nom", new AideService());
+		addMenuOption(3, "Edition", new AideService());
 	}
 }
