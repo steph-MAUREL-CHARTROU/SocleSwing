@@ -2,7 +2,6 @@ package fr.diginamic.services;
 
 import java.awt.Color;
 
-import fr.diginamic.composants.Console;
 import fr.diginamic.composants.MenuService;
 
 /** Exemple
@@ -17,7 +16,7 @@ public class AideService extends MenuService {
 		console.println("Bonjour", Color.RED);
 
 
-		String saisie = Console.input("Comment vous appelez-vous ?");
+		String saisie = console.input("Comment vous appelez-vous ?");
 		
 		console.html("Vous vous <b>appelez</b> ").html("<span style='color:red'>"+saisie+"</span>");
 
