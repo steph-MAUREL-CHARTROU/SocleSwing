@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
+import fr.diginamic.composants.ui.Form;
+
 /**
  * Point d'entrée de l'application: launcher
  * 
@@ -13,7 +15,7 @@ import javax.swing.SwingUtilities;
  */
 public class Launcher {
 
-	public static final List<String> holder = new LinkedList<String>();
+	public static final List<Boolean> holder = new LinkedList<Boolean>();
 	/**
 	 * Point d'entrée
 	 * 
