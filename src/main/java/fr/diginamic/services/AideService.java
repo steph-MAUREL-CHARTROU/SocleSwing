@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
+
 import fr.diginamic.composants.MenuService;
 import fr.diginamic.composants.ui.DateField;
 import fr.diginamic.composants.ui.Form;
@@ -19,6 +21,7 @@ public class AideService extends MenuService {
 
 	@Override
 	public void traitement() {
+		
 		console.clear();
 		console.println("Bonjour", Color.RED);
 		
@@ -36,6 +39,8 @@ public class AideService extends MenuService {
 		form.addInput(new ComboBox("vehicule", "Véhicule", vehicules));
 
 		boolean valide = console.input("Demande de nom", form);
+		
+		console.html("<table><tr><td><a href=\"a1\">Cell1</a></td><td><a href=\"a2\">Cell2</a></td></tr></table>");
 		
 		if (valide) {
 			console.html("Vous vous <b>appelez</b> ").html("<span style='color:red'>"+form.getValue("prenom")+" "+form.getValue("nom")+"</span><br><br>");

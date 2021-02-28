@@ -2,6 +2,7 @@ package fr.diginamic;
 
 import fr.diginamic.composants.AbstractApplication;
 import fr.diginamic.services.AideService;
+import fr.diginamic.services.LinkService;
 
 /**
  * Fenêtre principale qui porte les principaux composants graphiques de
@@ -34,7 +35,7 @@ public class Application extends AbstractApplication {
 		addMenu(3, "Rapports");
 		
 		addMenuOption(1, "Aide", new AideService());
-		addMenuOption(2, "Par nom", new AideService());
+		addMenuOption(2, "Par nom", new LinkService());
 		addMenuOption(3, "Edition", new AideService());
 	}
 }

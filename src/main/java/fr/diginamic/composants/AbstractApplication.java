@@ -13,6 +13,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
 
 public abstract class AbstractApplication extends JFrame {
 
@@ -22,8 +27,9 @@ public abstract class AbstractApplication extends JFrame {
 	private int height = 718;
 	
 	private Map<Integer, JMenu> categories = new HashMap<>();
-	private JMenuBar menuBar = new JMenuBar();
+	protected JMenuBar menuBar = new JMenuBar();
 	private static ExecutorService threadService = Executors.newFixedThreadPool(3);
+	private Console console = new Console();
 
 	/**
 	 * Constructeur
@@ -60,6 +66,8 @@ public abstract class AbstractApplication extends JFrame {
 	}
 	
 	public void addMenuOption(Integer id, String name, MenuService menuService) {
+		
+		menuService.setApplication(this);
 		
 		JMenu menuCateg = categories.get(id);
 		if (menuCateg!=null) {
@@ -103,6 +111,41 @@ public abstract class AbstractApplication extends JFrame {
 	 */
 	public void buildInterfaceGraphique() {
 		this.setLayout(null);
+		
+		
+		
+		HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
+		
+		HTMLDocument htmlDocument = (HTMLDocument) htmlEditorKit.createDefaultDocument();
+		StyleSheet style = htmlDocument.getStyleSheet();
+		htmlEditorKit.setStyleSheet(style);
+		style.addRule(".btn-blue {\r\n"
+				+ "    border-radius: 4px;\r\n"
+				+ "    border: solid 1px #20538D;\r\n"
+				+ "    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);\r\n"
+				+ "    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);\r\n"
+				+ "    color: #FFF;\r\n"
+				+ "    background: #4479BA;\r\n"
+				+ "    padding: 8px 12px;\r\n"
+				+ "    text-decoration: none;\r\n"
+				+ "}");
+		style.addRule(".btn-red {\r\n"
+				+ "    border-radius: 4px;\r\n"
+				+ "    border: solid 1px #20538D;\r\n"
+				+ "    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);\r\n"
+				+ "    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);\r\n"
+				+ "    color: #FFF;\r\n"
+				+ "    background: red;\r\n"
+				+ "    padding: 8px 12px;\r\n"
+				+ "    text-decoration: none;\r\n"
+				+ "}");
+		style.addRule("table {\r\n"
+				+ "    border: solid 1px black;border-spacing:0px;"
+				+ "}");
+		style.addRule("td {\r\n"
+				+ "    border: solid 1px black; padding:5px;"
+				+ "}");
+		
 
 		// La mise à NULL du Layout permet d'afficher tous les éléments de l'interface
 		// graphique en coordonnées X, Y
@@ -111,7 +154,27 @@ public abstract class AbstractApplication extends JFrame {
 		JTextPane afficheur = new JTextPane();
 		afficheur.setBounds(10, 200, width - 40, 390);
 		afficheur.setFont(Console.FONT_18);
+		afficheur.setEditable(false);
 		afficheur.setContentType("text/html");
+		afficheur.setEditorKit(htmlEditorKit);
+		afficheur.setDocument(htmlDocument);
+		afficheur.addHyperlinkListener(new HyperlinkListener(){
+
+		    @Override
+		    public void hyperlinkUpdate(HyperlinkEvent e) {
+
+		    	if ( e.getEventType() == HyperlinkEvent.EventType.ACTIVATED ){
+		            String[] tokens = e.getDescription().split("\\.");
+		            String className = tokens[0].substring(0, 1).toUpperCase()+tokens[0].substring(1);
+		            String methodWithParameter = tokens[1];
+		            String methodName = methodWithParameter.substring(0, methodWithParameter.indexOf("("));
+		            String parameter = methodWithParameter.substring(methodWithParameter.indexOf("(")+1, methodWithParameter.indexOf(")"));
+		            Long id = Long.parseLong(parameter);
+		        }
+
+		    }
+
+		});
 		
 		Console.afficheur = afficheur;
 

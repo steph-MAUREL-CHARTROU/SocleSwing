@@ -36,9 +36,12 @@ public class DateField extends Input {
 	
 	@Override
 	public void setValue(JComponent component) {
-		Date date = (Date)picker.getEditor().getValue();
-		SimpleDateFormat formatter = new SimpleDateFormat(format);
-		this.value = formatter.format(date);
+		String texte = picker.getEditor().getText();
+		if (!texte.isEmpty()) {
+			Date date = (Date)picker.getEditor().getValue();
+			SimpleDateFormat formatter = new SimpleDateFormat(format);
+			this.value = formatter.format(date);
+		}
 	}
 	
 	@Override
