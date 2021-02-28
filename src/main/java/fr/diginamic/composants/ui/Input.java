@@ -13,6 +13,8 @@ public abstract class Input {
 		this.name = name;
 		this.label = label;
 	}
+	
+	public abstract JComponent convert();
 
 	public abstract String getValue();
 	

@@ -11,6 +11,12 @@ public class TextField extends Input {
 		super(name, label);
 		setWidth(150);
 	}
+	
+
+	@Override
+	public JComponent convert() {
+		return new JTextField();
+	}
 
 	/**
 	 * @return the value
@@ -28,6 +34,7 @@ public class TextField extends Input {
 	public InputType getType() {
 		return InputType.TEXTFIELD;
 	}
+
 
 	
 }

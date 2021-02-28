@@ -7,19 +7,15 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.text.AttributeSet;
-import javax.swing.text.MaskFormatter;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
@@ -27,7 +23,6 @@ import javax.swing.text.StyleContext;
 import fr.diginamic.Launcher;
 import fr.diginamic.composants.ui.Form;
 import fr.diginamic.composants.ui.Input;
-import fr.diginamic.composants.ui.InputType;
 
 /**
  * Classe qui propose quelques méthodes pour construire des composants
@@ -160,20 +155,7 @@ public class Console {
 			label.setFont(FONT_14);
 			fenetreRecherche.add(label);
 
-			JComponent component = null;
-			if (input.getType().equals(InputType.TEXTFIELD)) {
-				component = new JTextField();
-
-			} else if (input.getType().equals(InputType.DATEFIELD)) {
-				MaskFormatter df = null;
-				try {
-					df = new MaskFormatter("##-##-####");
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				component = new JFormattedTextField(df);
-			}
+			JComponent component = input.convert();
 			int width = fenetreRecherche.getWidth() - maxLabelWidth - 40;
 			if (input.getWidth() > 0) {
 				width = input.getWidth();
