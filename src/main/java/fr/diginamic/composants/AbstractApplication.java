@@ -2,7 +2,6 @@ package fr.diginamic.composants;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -32,7 +31,6 @@ public abstract class AbstractApplication extends JFrame {
 	private Map<Integer, JMenu> categories = new HashMap<>();
 	protected JMenuBar menuBar = new JMenuBar();
 	private static ExecutorService threadService = Executors.newFixedThreadPool(3);
-	private Console console = new Console();
 
 	/**
 	 * Constructeur
@@ -122,32 +120,26 @@ public abstract class AbstractApplication extends JFrame {
 		HTMLDocument htmlDocument = (HTMLDocument) htmlEditorKit.createDefaultDocument();
 		StyleSheet style = htmlDocument.getStyleSheet();
 		htmlEditorKit.setStyleSheet(style);
-		style.addRule(".btn-blue {\r\n"
-				+ "    border-radius: 4px;\r\n"
-				+ "    border: solid 1px #20538D;\r\n"
-				+ "    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);\r\n"
-				+ "    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);\r\n"
-				+ "    color: #FFF;\r\n"
-				+ "    background: #4479BA;\r\n"
-				+ "    padding: 8px 12px;\r\n"
-				+ "    text-decoration: none;\r\n"
-				+ "}");
-		style.addRule(".btn-red {\r\n"
-				+ "    border-radius: 4px;\r\n"
-				+ "    border: solid 1px #20538D;\r\n"
-				+ "    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);\r\n"
-				+ "    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);\r\n"
-				+ "    color: #FFF;\r\n"
-				+ "    background: red;\r\n"
-				+ "    padding: 8px 12px;\r\n"
-				+ "    text-decoration: none;\r\n"
-				+ "}");
-		style.addRule("table {\r\n"
-				+ "    border: solid 1px black;border-spacing:0px;"
-				+ "}");
-		style.addRule("td {\r\n"
-				+ "    border: solid 1px black; padding:5px;"
-				+ "}");
+		style.addRule("table { border: solid 0px black;border-spacing:0px;border-margin:0px;}");
+		style.addRule("td { border: solid 1px black; padding-top:0px; padding-bottom:0px; padding-left:4px;padding-right:4px;}");
+		
+		style.addRule(".bg-dark-blue { color: #FFFFFF; background: #0C0F46; font-weight:bold; }");
+		style.addRule(".bg-blue { color: #FFFFFF; background: #007bff; font-weight:bold; }");
+		style.addRule(".bg-red { color: #FFFFFF; background: #dc3545; font-weight:bold;  }");
+		style.addRule(".bg-green { color: #FFFFFF; background: #28a745; font-weight:bold;  }");
+		style.addRule(".bg-grey { color: #FFFFFF; background: #6c757d; font-weight:bold;  }");
+		style.addRule(".bg-orange { color: #FFFFFF; background: #ffc107; font-weight:bold;  }");
+		style.addRule(".bg-turquoise { color: #FFFFFF; background: #17a2b8; font-weight:bold;  }");
+		style.addRule(".bg-yellow { color: #FFFFFF; background: #F1C40F; font-weight:bold;  }");
+		
+		style.addRule(".btn-blue { color: #FFFFFF; background: #007bff; }");
+		style.addRule(".btn-red { color: #FFFFFF; background: #dc3545; }");
+		style.addRule(".btn-green { color: #FFFFFF; background: #28a745;  text-decoration: none; }");
+		style.addRule(".btn-grey { color: #FFFFFF; background: #6c757d;  text-decoration: none; }");
+		style.addRule(".btn-orange { color: #FFFFFF; background: #ffc107;  text-decoration: none; }");
+		style.addRule(".btn-turquoise { color: #FFFFFF; background: #17a2b8;  text-decoration: none; }");
+		style.addRule(".btn-yellow { color: #FFFFFF; background: #F1C40F;  text-decoration: none; }");
+		
 		
 
 		// La mise à NULL du Layout permet d'afficher tous les éléments de l'interface
