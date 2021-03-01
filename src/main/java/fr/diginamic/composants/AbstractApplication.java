@@ -20,6 +20,8 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 
+import fr.diginamic.reflect.ReflectUtils;
+
 public abstract class AbstractApplication extends JFrame {
 
 	/** serialVersionUID */
@@ -165,12 +167,8 @@ public abstract class AbstractApplication extends JFrame {
 		    public void hyperlinkUpdate(HyperlinkEvent e) {
 
 		    	if ( e.getEventType() == HyperlinkEvent.EventType.ACTIVATED ){
-		            String[] tokens = e.getDescription().split("\\.");
-		            String className = tokens[0].substring(0, 1).toUpperCase()+tokens[0].substring(1);
-		            String methodWithParameter = tokens[1];
-		            String methodName = methodWithParameter.substring(0, methodWithParameter.indexOf("("));
-		            String parameter = methodWithParameter.substring(methodWithParameter.indexOf("(")+1, methodWithParameter.indexOf(")"));
-		            Long id = Long.parseLong(parameter);
+		            
+		    		ReflectUtils.instantiate(e.getDescription());
 		        }
 
 		    }

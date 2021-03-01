@@ -4,12 +4,10 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
-
 import fr.diginamic.composants.MenuService;
+import fr.diginamic.composants.ui.ComboBox;
 import fr.diginamic.composants.ui.DateField;
 import fr.diginamic.composants.ui.Form;
-import fr.diginamic.composants.ui.ComboBox;
 import fr.diginamic.composants.ui.Selectable;
 import fr.diginamic.composants.ui.TextField;
 
@@ -25,10 +23,9 @@ public class AideService extends MenuService {
 		console.clear();
 		console.println("Bonjour", Color.RED);
 		
-		
 		Form form = new Form();
 		form.addInput(new TextField("nom", "Nom"));
-		form.addInput(new TextField("prenom", "Prénom"));
+		form.addInput(new TextField("prenom", "PrÃ©nom"));
 		form.addInput(new DateField("dateNaissance", "Date de naissance"));
 		
 		List<Selectable> vehicules = new ArrayList<>();
@@ -36,7 +33,7 @@ public class AideService extends MenuService {
 		vehicules.add(new Vehicule(2L, "AW-227-XE", "Peugeot", "3008"));
 		vehicules.add(new Vehicule(3L, "XX-131-XT", "Peugeot", "3008"));
 		
-		form.addInput(new ComboBox("vehicule", "Véhicule", vehicules));
+		form.addInput(new ComboBox("vehicule", "VÃ©hicule", vehicules));
 
 		boolean valide = console.input("Demande de nom", form);
 		
@@ -44,7 +41,7 @@ public class AideService extends MenuService {
 		
 		if (valide) {
 			console.html("Vous vous <b>appelez</b> ").html("<span style='color:red'>"+form.getValue("prenom")+" "+form.getValue("nom")+"</span><br><br>");
-			console.html("Voiture sélectionnée :"+form.getValue("vehicule")).html("<br>");
+			console.html("Voiture sÃ©lectionnÃ©e :"+form.getValue("vehicule")).html("<br>");
 			console.html("Date de naissance :"+form.getValue("dateNaissance"));
 		}
 	}

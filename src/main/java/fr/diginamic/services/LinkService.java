@@ -13,8 +13,8 @@ public class LinkService extends MenuService {
 		
 		console.html("<h1>Coucou</h1>");
 		console.html("<table>"
-				+ "<tr><td><a class='btn-blue' href='linkService.modifier(22)'>Modifier</a></td><td><a class='btn-red' href='linkService.supprimer(22)'>Supprimer</a></td><td>Véhicule CV-HR-123</td></tr>"
-				+ "<tr><td><a class='btn-blue' href='linkService.modifier(23)'>Modifier</a></td><td><a class='btn-red' href='linkService.supprimer(22)'>Supprimer</a></td><td>Véhicule CV-HR-123</td></tr>"
+				+ "<tr><td><a class='btn-blue' href='linkService.modifier(22)'>Modifier</a></td><td><a class='btn-red' href='linkService.supprimer(22)'>Supprimer</a></td><td>VÃ©hicule CV-HR-123</td></tr>"
+				+ "<tr><td><a class='btn-blue' href='linkService.modifier(23)'>Modifier</a></td><td><a class='btn-red' href='linkService.supprimer(23)'>Supprimer</a></td><td>VÃ©hicule CV-HR-123</td></tr>"
 				+ "</table>");
 		
 	}
