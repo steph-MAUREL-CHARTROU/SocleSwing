@@ -44,8 +44,8 @@ public class Exemple5Service extends MenuService {
 				+ "<tr class='bg-green'><td>&nbsp;</td><td>&nbsp;</td><td>Nom</td><td>Prénom</td></tr>";
 		for (Client c : clients) {
 			html += "<tr>"
-				  + "  <td><a class='btn-blue' href='exemple5Service.modifier(" + c.getId()+ ")'><img src='images/pencil-blue.png'></a></td>"
-				  + "  <td><a class='btn-red' href='exemple5Service.supprimer("+ c.getId() + ")'><img src='images/trash-red.png'></a></td>"
+				  + "  <td><a class='btn-blue' href='modifier(" + c.getId()+ ")'><img src='images/pencil-blue.png'></a></td>"
+				  + "  <td><a class='btn-red' href='supprimer("+ c.getId() + ")'><img src='images/trash-red.png'></a></td>"
 				  + "  <td>" + c.getNom() + "</td>"
 				  + "  <td>" + c.getPrenom() + "</td>"
 				  +"</tr>";
