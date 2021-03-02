@@ -21,15 +21,26 @@ import javax.swing.text.html.StyleSheet;
 
 import fr.diginamic.reflect.ReflectUtils;
 
+/** Application mère de type SWING.
+ * @author RichardBONNAMY
+ *
+ */
 public abstract class AbstractApplication extends JFrame {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = -5774337273803383053L;
+	/** width */
 	private int width = 1400;
+	/** height */
 	private int height = 718;
 	
+	/** Catégories principales de menu */
 	private Map<Integer, JMenu> categories = new HashMap<>();
+	
+	/** Barre de menu */
 	protected JMenuBar menuBar = new JMenuBar();
+	
+	/** Pour l'exécution des use case (i.e. classes de services associées à une option de menu) */
 	private static ExecutorService threadService = Executors.newFixedThreadPool(3);
 
 	/**
@@ -59,6 +70,10 @@ public abstract class AbstractApplication extends JFrame {
 		setLocation(x, y);
 	}
 	
+	/** Ajoute une catégorie de menu à la barre de menu
+	 * @param id identifiant
+	 * @param categoryName nom de la catégorie
+	 */
 	public void addMenu(Integer id, String categoryName) {
 		JMenu menuCateg = new JMenu(categoryName);
 		menuBar.add(menuCateg);
@@ -66,6 +81,13 @@ public abstract class AbstractApplication extends JFrame {
 		categories.put(id, menuCateg);
 	}
 	
+	/** Ajoute une option de menu à une catégorie dont l'id est passé en paramètre.
+	 * L'option de menu est obligatoirement associée à une classe de service qui hérite
+	 * de {@link MenuService}
+	 * @param id id
+	 * @param name name
+	 * @param menuService classe de service
+	 */
 	public void addMenuOption(Integer id, String name, MenuService menuService) {
 		
 		menuService.setApplication(this);
@@ -105,15 +127,14 @@ public abstract class AbstractApplication extends JFrame {
 
 	/**
 	 * Construit l'interface graphique principale avec:<br>
-	 * - des boutons pour chaque item du menu<br>
-	 * - un bouton/gomme permettant d'effacer la zone d'affichage<br>
-	 * - une JTextPane qui va permettre d'afficher tout ce qu'on a à afficher.
+	 * - un menu<br>
+	 * - des styles CSS<br>
+	 * - une JTextPane (la console) qui va permettre d'afficher tout ce qu'on a à afficher 
+	 * et également d'activer des formulaires.
 	 * 
 	 */
 	public void buildInterfaceGraphique() {
 		this.setLayout(null);
-		
-		
 		
 		HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
 		
@@ -140,8 +161,6 @@ public abstract class AbstractApplication extends JFrame {
 		style.addRule(".btn-turquoise { color: #FFFFFF; background: #17a2b8;  text-decoration: none; }");
 		style.addRule(".btn-yellow { color: #FFFFFF; background: #F1C40F;  text-decoration: none; }");
 		
-		
-
 		// La mise à NULL du Layout permet d'afficher tous les éléments de l'interface
 		// graphique en coordonnées X, Y
 
@@ -154,17 +173,12 @@ public abstract class AbstractApplication extends JFrame {
 		afficheur.setEditorKit(htmlEditorKit);
 		afficheur.setDocument(htmlDocument);
 		afficheur.addHyperlinkListener(new HyperlinkListener(){
-
 		    @Override
 		    public void hyperlinkUpdate(HyperlinkEvent e) {
-
 		    	if ( e.getEventType() == HyperlinkEvent.EventType.ACTIVATED ){
-		            
-		    		ReflectUtils.instantiate(e.getDescription());
+		    		ReflectUtils.invoke(e.getDescription());
 		        }
-
 		    }
-
 		});
 		
 		Console.afficheur = afficheur;
@@ -186,6 +200,9 @@ public abstract class AbstractApplication extends JFrame {
 		this.setVisible(true);
 	}
 	
-	
+	/**
+	 * Les classes filles doivent implémenter cette méthode, qui va permettre notamment d'effectuer
+	 * les traitements de démarrage et de créer le menu
+	 */
 	public abstract void main();
 }

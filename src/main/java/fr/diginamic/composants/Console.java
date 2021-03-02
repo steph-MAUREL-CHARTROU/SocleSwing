@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,12 +16,14 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyleContext;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import fr.diginamic.Launcher;
+import fr.diginamic.composants.html.HtmlUtils;
 import fr.diginamic.composants.ui.Form;
 import fr.diginamic.composants.ui.Input;
 
@@ -86,10 +89,13 @@ public class Console {
 		return (int) ((dimension.getWidth() - component.getWidth()) / 2);
 	}
 
-	/**
-	 * @param titreFormulaire
-	 * @param form
-	 * @return
+	/** Permet d'activer un formulaire SWING.
+	 * La méthode est synchrone, c'est à dire que la méthode ne rend la main que lorsque le
+	 * formateur a cliqué sur Valider (return true) ou Annuler (return false).
+	 * 
+	 * @param titreFormulaire titre du formulaire
+	 * @param form formulaire
+	 * @return boolean
 	 */
 	public boolean input(String titreFormulaire, Form form) {
 
@@ -119,10 +125,10 @@ public class Console {
 		int maxLabelWidth = 0;
 		for (Input input : form) {
 
-			// Nombre de carcat�res dans le texte de la question
+			// Nombre de carcatères dans le texte de la question
 			int nbCaracteres = input.getLabel().length();
 
-			// Largeur approximative en pixels du texte � afficher
+			// Largeur approximative en pixels du texte à afficher
 			int largeurLabel = nbCaracteres * 10;
 
 			// Recherche du texte le plus large parmi tous les textes des questions
@@ -149,7 +155,7 @@ public class Console {
 
 			Input input = form.getInputs().get(i);
 
-			// Cr�ation du label
+			// Création du label
 			JLabel label = new JLabel(input.getLabel());
 			label.setBounds(10, 18 + i * 30, maxLabelWidth, 20);
 			label.setFont(FONT_14);
@@ -229,65 +235,75 @@ public class Console {
 		}
 	}
 
-	public Console html(String text) {
-		contentpane.append(text);
+	/** Affiche un texte
+	 * @param text texte
+	 * @return Console
+	 */
+	public Console print(String text) {
+		
+		String textModifie = text;
+		
+		// Si le texte contient des images, on modifie les sources
+		if (text.contains("img src")) {
+			Document doc = Jsoup.parse(text);
+			Elements elts = doc.getElementsByAttribute("src");
+			if (elts!=null && elts.size()>0) {
+				for (Element elt: elts) {
+					String value = elt.attr("src");
+					
+					URL url = getClass().getClassLoader().getResource(value);
+					if (url!=null) {
+						elt.attr("src", url.toString());
+					}
+				}
+			}
+			textModifie = doc.body().children().toString();
+		}
+		
+		contentpane.append(textModifie);
 		afficheur.setText(contentpane.toString());
 		return this;
 	}
 
-	public Console print(String text) {
-		contentpane.append(text);
-		appendToPane(text, Color.BLACK);
-		return this;
-	}
-
+	/** Affiche un texte HTML suivi d'un passage à la ligne
+	 * @param text texte
+	 * @return Console.
+	 */
 	public Console println(String text) {
-		contentpane.append(text).append("<br>");
-		appendToPane(text + "\n", Color.BLACK);
-		return this;
+		return print(text).print("<br>");
 	}
 
-	public Console print(String text, Color c) {
-		contentpane.append("<span style='color:#").append(String.format("%02X", c.getRed()))
-				.append(String.format("%02X", c.getGreen())).append(String.format("%02X", c.getBlue())).append("'>")
-				.append(text).append("</span>");
-		appendToPane(text, c);
-		return this;
-	}
-
-	public Console println(String text, Color c) {
-		contentpane.append("<span style='color:#").append(String.format("%02X", c.getRed()))
-				.append(String.format("%02X", c.getGreen())).append(String.format("%02X", c.getBlue())).append("'>")
-				.append(text).append("</span><br>");
-		appendToPane(text + "\n", c);
-		return this;
-	}
-
-	/**
-	 * Ajoute du texte au conteneur
+	/** Affiche un texte avec une couleur donnée ainsi que des attributs css au format suivant:
+	 * propriété1: valeur1; propriété2: valeur2;
 	 * 
-	 * @param msg message
-	 * @param c   couleur
+	 * @param text texte
+	 * @param c couleur
+	 * @param attributes attributs CSS
 	 * @return Console
 	 */
-	protected Console appendToPane(String msg, Color c) {
-		StyleContext sc = StyleContext.getDefaultStyleContext();
-		AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
+	public Console print(String text, Color c, String... attributes) {
+		return print(HtmlUtils.toSpan(text, c, attributes));
+	}
 
-		aset = sc.addAttribute(aset, StyleConstants.FontFamily, "Lucida Console");
-		aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
-
-		int len = afficheur.getDocument().getLength();
-		afficheur.setCaretPosition(len);
-		afficheur.setCharacterAttributes(aset, false);
-		afficheur.replaceSelection(msg);
-		return this;
+	/** Affiche un texte avec une couleur donnée ainsi que des attributs css au format suivant:
+	 * propriété1: valeur1; propriété2: valeur2;
+	 * 
+	 * Le texte est ensuite suivi d'un passage à la ligne
+	 * 
+	 * @param text texte
+	 * @param c couleur
+	 * @param attributes attributs CSS
+	 * @return Console
+	 */
+	public Console println(String text, Color c, String... attributes) {
+		return println(HtmlUtils.toSpan(text, c, attributes));
 	}
 
 	/**
 	 * Efface le contenu de l'afficheur
 	 */
 	public void clear() {
+		contentpane = new StringBuilder();
 		afficheur.setText("");
 	}
 

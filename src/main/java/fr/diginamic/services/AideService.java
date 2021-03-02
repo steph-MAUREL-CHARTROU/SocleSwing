@@ -37,12 +37,12 @@ public class AideService extends MenuService {
 
 		boolean valide = console.input("Demande de nom", form);
 		
-		console.html("<table><tr><td><a href=\"a1\">Cell1</a></td><td><a href=\"a2\">Cell2</a></td></tr></table>");
+		console.print("<table><tr><td><a href=\"a1\">Cell1</a></td><td><a href=\"a2\">Cell2</a></td></tr></table>");
 		
 		if (valide) {
-			console.html("Vous vous <b>appelez</b> ").html("<span style='color:red'>"+form.getValue("prenom")+" "+form.getValue("nom")+"</span><br><br>");
-			console.html("Voiture sélectionnée :"+form.getValue("vehicule")).html("<br>");
-			console.html("Date de naissance :"+form.getValue("dateNaissance"));
+			console.print("Vous vous <b>appelez</b> ").println("<span style='color:red'>"+form.getValue("prenom")+" "+form.getValue("nom")+"</span>");
+			console.println("Voiture sélectionnée :"+form.getValue("vehicule"));
+			console.println("Date de naissance :"+form.getValue("dateNaissance"));
 		}
 	}
 
