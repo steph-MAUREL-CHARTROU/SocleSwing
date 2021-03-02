@@ -13,7 +13,7 @@ import fr.diginamic.composants.MenuService;
 import fr.diginamic.composants.db.SqlUtils;
 import fr.diginamic.composants.ui.Form;
 import fr.diginamic.composants.ui.TextField;
-import fr.diginamic.services.entite.Client;
+import fr.diginamic.services.exemples.entite.Client;
 
 public class Exemple5Service extends MenuService {
 

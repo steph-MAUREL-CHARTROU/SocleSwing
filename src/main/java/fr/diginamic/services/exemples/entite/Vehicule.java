@@ -1,4 +1,4 @@
-package fr.diginamic.services.entite;
+package fr.diginamic.services.exemples.entite;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 

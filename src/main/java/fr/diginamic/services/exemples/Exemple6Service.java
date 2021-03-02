@@ -10,7 +10,7 @@ import fr.diginamic.composants.ui.DateField;
 import fr.diginamic.composants.ui.Form;
 import fr.diginamic.composants.ui.Selectable;
 import fr.diginamic.composants.ui.TextField;
-import fr.diginamic.services.entite.Vehicule;
+import fr.diginamic.services.exemples.entite.Vehicule;
 
 public class Exemple6Service extends MenuService {
 

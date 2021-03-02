@@ -1,4 +1,4 @@
-package fr.diginamic.services.entite;
+package fr.diginamic.services.exemples.entite;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
