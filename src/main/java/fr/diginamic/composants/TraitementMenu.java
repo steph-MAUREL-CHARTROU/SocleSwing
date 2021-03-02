@@ -2,20 +2,24 @@ package fr.diginamic.composants;
 
 import java.util.concurrent.Callable;
 
-public class TraitementMenu implements Callable<String> {
+/** Traitement asynchrone permettant d'exécuter un service
+ * @author RichardBONNAMY
+ *
+ */
+public class TraitementMenu implements Callable<Void> {
 	
+	/** menuService */
 	private MenuService menuService;
+	
+	/** Constructeur
+	 * @param menuService service à exécuter en asynchrone
+	 */
 	public TraitementMenu(MenuService menuService) {
 		this.menuService=menuService;
 	}
 
-	/**
-	 * Obligation de rédéfinir la méthode call. 
-	 * Comme la classe Traitement1 implémente Call<Integer> alors
-	 * la méthode call() doit retourner un résultat de type Integer
-	 */
 	@Override
-	public String call() throws Exception {
+	public Void call() throws Exception {
 		menuService.traitement();
 		return null;
 	}

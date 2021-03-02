@@ -2,7 +2,12 @@ package fr.diginamic;
 
 import fr.diginamic.composants.AbstractApplication;
 import fr.diginamic.services.AideService;
-import fr.diginamic.services.LinkService;
+import fr.diginamic.services.exemples.Exemple1Service;
+import fr.diginamic.services.exemples.Exemple2Service;
+import fr.diginamic.services.exemples.Exemple3Service;
+import fr.diginamic.services.exemples.Exemple4Service;
+import fr.diginamic.services.exemples.Exemple5Service;
+import fr.diginamic.services.exemples.Exemple6Service;
 
 /**
  * Fenêtre principale qui porte les principaux composants graphiques de
@@ -31,11 +36,14 @@ public class Application extends AbstractApplication {
 	 */
 	public void main() {
 		addMenu(1, "File");
-		addMenu(2, "Recherche");
-		addMenu(3, "Rapports");
+		addMenu(3, "Exemples");
 		
 		addMenuOption(1, "Aide", new AideService());
-		addMenuOption(2, "Par nom", new LinkService());
-		addMenuOption(3, "Edition", new AideService());
+		addMenuOption(3, "Exemple 1 - Titres", new Exemple1Service());
+		addMenuOption(3, "Exemple 2 - Textes de couleur", new Exemple2Service());
+		addMenuOption(3, "Exemple 3 - Table", new Exemple3Service());
+		addMenuOption(3, "Exemple 4 - Table avec liens vers méthodes", new Exemple4Service());
+		addMenuOption(3, "Exemple 5 - Table dynamique", new Exemple5Service());
+		addMenuOption(3, "Exemple 6 - Formulaire", new Exemple6Service());
 	}
 }

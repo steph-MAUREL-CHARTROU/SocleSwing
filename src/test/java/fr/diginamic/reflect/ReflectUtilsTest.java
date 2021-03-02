@@ -2,6 +2,8 @@ package fr.diginamic.reflect;
 
 import org.junit.Test;
 
+import fr.diginamic.composants.reflect.ReflectUtils;
+
 public class ReflectUtilsTest {
 
 	@Test

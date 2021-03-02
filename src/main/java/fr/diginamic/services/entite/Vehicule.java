@@ -1,4 +1,4 @@
-package fr.diginamic.services;
+package fr.diginamic.services.entite;
 
 import fr.diginamic.composants.ui.Selectable;
 

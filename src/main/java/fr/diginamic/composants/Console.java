@@ -276,6 +276,19 @@ public class Console {
 	/** Affiche un texte avec une couleur donnée ainsi que des attributs css au format suivant:
 	 * propriété1: valeur1; propriété2: valeur2;
 	 * 
+	 * Le texte est ensuite suivi d'un passage à la ligne
+	 * 
+	 * @param text texte
+	 * @param attributes attributs CSS
+	 * @return Console
+	 */
+	public Console println(String text, String... attributes) {
+		return println(HtmlUtils.toSpan(text, attributes));
+	}
+	
+	/** Affiche un texte avec une couleur donnée ainsi que des attributs css au format suivant:
+	 * propriété1: valeur1; propriété2: valeur2;
+	 * 
 	 * @param text texte
 	 * @param c couleur
 	 * @param attributes attributs CSS

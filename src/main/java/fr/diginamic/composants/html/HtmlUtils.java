@@ -36,6 +36,35 @@ public class HtmlUtils {
 	
 	/** Encapsule un texte, une couleur, et ses attributs CSS dans un span avec une balise style
 	 * @param text texte
+	 * @param attrsStr attributs CSS au format "name:value"
+	 * @return String
+	 */
+	public static String toSpan(String text, String... attrsStr) {
+		
+		List<AttributCss> attributes = new ArrayList<>();
+		for (int i=0; i<attrsStr.length; i++) {
+			if (attrsStr[i].contains(";")) {
+				String[] subAttrs = attrsStr[i].split(";");
+				for (String subAttr: subAttrs) {
+					String[] tokens = subAttr.split(":");
+					if (tokens.length==2) {
+						attributes.add(new AttributCss(tokens[0], tokens[1])); 
+					}
+				}
+			}
+			else {
+				String[] tokens = attrsStr[i].split(":");
+				if (tokens.length==2) {
+					attributes.add(new AttributCss(tokens[0], tokens[1])); 
+				}
+			}
+		}
+
+		return toSpan(text, attributes.toArray(new AttributCss[0]));
+	}
+	
+	/** Encapsule un texte, une couleur, et ses attributs CSS dans un span avec une balise style
+	 * @param text texte
 	 * @param c couleur
 	 * @param attrsStr attributs CSS au format "name:value"
 	 * @return String
@@ -64,11 +93,21 @@ public class HtmlUtils {
 		return toSpan(text, ObjectArrays.concat(toAttribute(c), attributes.toArray(new AttributCss[0])));
 	}
 	
+	/** Encapsule un texte, une couleur, et ses attributs CSS dans un span avec une balise style
+	 * @param text texte
+	 * @param c couleur
+	 * @param attrsStr attributs CSS au format "name:value"
+	 * @return String
+	 */
 	public static String toSpan(String text, Color c, AttributCss... attributes) {
 
 		return toSpan(text, ObjectArrays.concat(toAttribute(c), attributes));
 	}
 	
+	/** Transforme la couleur en AttributCss
+	 * @param c couleur
+	 * @return {@link AttributCss}
+	 */
 	public static AttributCss toAttribute(Color c) {
 		
 		StringBuilder builder = new StringBuilder();
