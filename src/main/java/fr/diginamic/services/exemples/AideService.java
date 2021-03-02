@@ -1,4 +1,4 @@
-package fr.diginamic.services;
+package fr.diginamic.services.exemples;
 
 import java.awt.Color;
 

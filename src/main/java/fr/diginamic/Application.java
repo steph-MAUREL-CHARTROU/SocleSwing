@@ -1,7 +1,7 @@
 package fr.diginamic;
 
 import fr.diginamic.composants.AbstractApplication;
-import fr.diginamic.services.AideService;
+import fr.diginamic.services.exemples.AideService;
 import fr.diginamic.services.exemples.Exemple1Service;
 import fr.diginamic.services.exemples.Exemple2Service;
 import fr.diginamic.services.exemples.Exemple3Service;
