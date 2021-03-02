@@ -35,7 +35,9 @@ public class TextField extends Input {
 
 	@Override
 	public JComponent convert() {
-		return new JTextField();
+		JTextField textField = new JTextField();
+		textField.setText(value);
+		return textField;
 	}
 
 	/**

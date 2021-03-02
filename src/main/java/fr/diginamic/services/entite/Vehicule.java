@@ -1,5 +1,7 @@
 package fr.diginamic.services.entite;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 import fr.diginamic.composants.ui.Selectable;
 
 public class Vehicule implements Selectable {
@@ -22,6 +24,15 @@ public class Vehicule implements Selectable {
 		this.immatriculation = immatriculation;
 		this.marque = marque;
 		this.modele = modele;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Vehicule)) {
+			return false;
+		}
+		Vehicule autre = (Vehicule)obj;
+		return new EqualsBuilder().append(id, autre.getId()).isEquals();
 	}
 
 	@Override

@@ -37,7 +37,7 @@ public class Exemple6Service extends MenuService {
 		vehicules.add(new Vehicule(3L, "XX-131-XT", "Peugeot", "3008"));
 		
 		// Champ de type liste de sélection
-		form.addInput(new ComboBox("Liste de véhicules:", "vehicule", vehicules));
+		form.addInput(new ComboBox("Liste de véhicules:", "vehicule", vehicules, vehicules.get(2)));
 
 		// La méthode suivante permet d’afficher le formulaire.
 		// La méthode retourne false si l’utilisateur a cliqué sur Annuler, sinon 

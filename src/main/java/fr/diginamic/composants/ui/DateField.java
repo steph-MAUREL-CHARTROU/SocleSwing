@@ -1,5 +1,6 @@
 package fr.diginamic.composants.ui;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -7,6 +8,8 @@ import java.util.Locale;
 import javax.swing.JComponent;
 
 import org.jdesktop.swingx.JXDatePicker;
+
+import fr.diginamic.composants.error.ErrorManager;
 
 /** Champ de saisie d'une date
  * @author RichardBONNAMY
@@ -31,9 +34,28 @@ public class DateField extends Input {
 		setWidth(150);
 	}
 	
+	/** Constructeur
+	 * @param label libellé
+	 * @param name nom
+	 */
+	public DateField(String label, String name, String value) {
+		super(label, name);
+		this.value=value;
+		this.format="dd/MM/yyyy";
+		setWidth(150);
+	}
+	
 	@Override
 	public JComponent convert() {
 		picker = new JXDatePicker(Locale.FRANCE);
+		if (value!=null) {
+			SimpleDateFormat formatter = new SimpleDateFormat(format);
+			try {
+				picker.setDate(formatter.parse(value));
+			} catch (ParseException e) {
+				ErrorManager.manage("La date "+value+" n'est pas correcte. Vous ne pouvez pas vous en servir pour initialiser un DateField", e);
+			}
+		}
 		picker.setFormats(new SimpleDateFormat(format));
 		return picker;
 	}

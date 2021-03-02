@@ -66,9 +66,12 @@ public class Exemple5Service extends MenuService {
 		// On commence par créér le formulaire vide
 		Form form = new Form();
 				
-				// On ajoute au formulaire 2 champs de type texte.
+		// On ajoute au formulaire 2 champs de type texte pour permettre de modifier le nom et le prénom du client
 		form.addInput(new TextField("Nom:", "champ1", c.getNom()));
 		form.addInput(new TextField("Prénom:", "champ2", c.getPrenom()));
+		
+		// Les règles métier sont vérifiées dans le validator
+		form.setValidator(new Exemple5FormValidator());
 		
 		boolean valide = console.input("Modification du client "+c.getPrenom()+" "+c.getNom(), form);
 		if (valide) {
@@ -80,7 +83,7 @@ public class Exemple5Service extends MenuService {
 			c.setNom(nvNom);
 			c.setPrenom(nvPrenom);
 			transaction.commit();
-			
+
 			traitement();
 		}
 	}

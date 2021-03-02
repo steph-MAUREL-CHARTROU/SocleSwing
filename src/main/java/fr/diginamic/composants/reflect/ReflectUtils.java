@@ -109,9 +109,8 @@ public class ReflectUtils {
 			method.setAccessible(true);
 			method.invoke(obj, id);
 		} catch (ReflectiveOperationException e) {
-			String msg = "La méthode " + methodName + "(Long.class) n'existe pas dans la classe "
-					+ classe.getName();
-			ErrorManager.manage(msg, e);
+			e.printStackTrace();
+			ErrorManager.manage(e.getMessage(), e);
 		}
 	}
 }

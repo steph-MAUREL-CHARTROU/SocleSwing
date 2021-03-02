@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -205,16 +207,17 @@ public class Console {
 			public void actionPerformed(ActionEvent e) {
 
 				synchronized (Launcher.holder) {
-
 					for (String name : fields.keySet()) {
 						Input input = form.getInput(name);
 						input.setValue(fields.get(name));
 					}
-
-					Launcher.holder.add(true);
-					Launcher.holder.notify();
+					if (form.getValidator()==null || (form.getValidator()!=null && form.getValidator().validate(form))) {
+						fenetreRecherche.setVisible(false);
+						Launcher.holder.add(true);
+						Launcher.holder.notify();
+					}
 				}
-				fenetreRecherche.setVisible(false);
+				
 			}
 		});
 		fenetreRecherche.add(annuler);
@@ -233,6 +236,53 @@ public class Console {
 			}
 			return Launcher.holder.remove(0);
 		}
+	}
+	
+	/** Permet d'activer un formulaire SWING.
+	 * La méthode est synchrone, c'est à dire que la méthode ne rend la main que lorsque le
+	 * formateur a cliqué sur Valider (return true) ou Annuler (return false).
+	 * 
+	 * @param titreFormulaire titre du formulaire
+	 * @param form formulaire
+	 * @return boolean
+	 */
+	public void alert(String message) {
+
+		JFrame fenetre = new JFrame("Alerte");
+		
+		GridBagConstraints constraints = new GridBagConstraints(); 
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.insets.bottom = 10;
+        constraints.anchor = GridBagConstraints.CENTER;
+		
+		fenetre.getContentPane().setBackground(new Color(248, 215, 218));
+		fenetre.getContentPane().setLayout(new GridBagLayout());
+		fenetre.setBounds(100, 100, 500, 120);
+		int x = Console.getX(fenetre);
+		int y = Console.getY(fenetre);
+		fenetre.setLocation(x, y);
+		
+		fenetre.setVisible(true);
+		
+		JLabel label = new JLabel(message);
+		label.setFont(FONT_14);
+		label.setForeground(new Color(114, 28, 36));
+//		label.setAlignmentX(Component.CENTER_ALIGNMENT);
+		fenetre.add(label, constraints);
+		
+		
+
+		JButton valider = new JButton("Fermer");
+		constraints.gridx = 0;
+        constraints.gridy = 2;
+		fenetre.add(valider, constraints);
+		valider.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				fenetre.setVisible(false);
+			}
+		});
 	}
 
 	/** Affiche un texte
