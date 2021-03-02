@@ -147,6 +147,8 @@ public abstract class AbstractApplication extends JFrame {
 		HTMLDocument htmlDocument = (HTMLDocument) htmlEditorKit.createDefaultDocument();
 		StyleSheet style = htmlDocument.getStyleSheet();
 		htmlEditorKit.setStyleSheet(style);
+		style.addRule("body { font-family:'Arial';}");
+		
 		style.addRule("table { border: solid 0px black;border-spacing:0px;border-margin:0px;}");
 		style.addRule("td { border: solid 1px black; padding-top:0px; padding-bottom:0px; padding-left:4px;padding-right:4px;}");
 		

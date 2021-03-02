@@ -44,10 +44,10 @@ public class Exemple5Service extends MenuService {
 				+ "<tr class='bg-green'><td>&nbsp;</td><td>&nbsp;</td><td>Nom</td><td>Prénom</td></tr>";
 		for (Client c : clients) {
 			html += "<tr>"
-				  + "  <td><a class='btn-blue' href='modifier(" + c.getId()+ ")'><img src='images/pencil-blue.png'></a></td>"
-				  + "  <td><a class='btn-red' href='supprimer("+ c.getId() + ")'><img src='images/trash-red.png'></a></td>"
-				  + "  <td>" + c.getNom() + "</td>"
-				  + "  <td>" + c.getPrenom() + "</td>"
+				  + "  <td><a class='btn-blue' href='modifier(" + c.getId() + ")'><img width=25 src='images/pencil-blue-xs.png'></a></td>"
+				  + "  <td><a class='btn-red' href='supprimer(" + c.getId() + ")'><img width=25 src='images/trash-red-xs.png'></a></td>"
+				  + "  <td width='150px'>" + c.getNom() + "</td>"
+				  + "  <td width='150px'>" + c.getPrenom() + "</td>"
 				  +"</tr>";
 		}
 		html += "</table>";

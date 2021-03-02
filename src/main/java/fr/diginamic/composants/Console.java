@@ -244,7 +244,7 @@ public class Console {
 		String textModifie = text;
 		
 		// Si le texte contient des images, on modifie les sources
-		if (text.contains("img src")) {
+		if (text.contains("img") && text.contains("src")) {
 			Document doc = Jsoup.parse(text);
 			Elements elts = doc.getElementsByAttribute("src");
 			if (elts!=null && elts.size()>0) {
