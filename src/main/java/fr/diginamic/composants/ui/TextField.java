@@ -21,6 +21,17 @@ public class TextField extends Input {
 		setWidth(150);
 	}
 	
+	/** Constructeur
+	 * @param name nom du champ de saisie
+	 * @param label libellé du champ de saisie
+	 * @param value valeur du champ de saisie
+	 */
+	public TextField(String label, String name, String value) {
+		super(label, name);
+		this.value = value;
+		setWidth(150);
+	}
+	
 
 	@Override
 	public JComponent convert() {

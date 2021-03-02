@@ -184,7 +184,8 @@ public abstract class AbstractApplication extends JFrame {
 		    @Override
 		    public void hyperlinkUpdate(HyperlinkEvent e) {
 		    	if ( e.getEventType() == HyperlinkEvent.EventType.ACTIVATED ){
-		    		ReflectUtils.invoke(e.getDescription());
+		    		TraitementInvocation tt = new TraitementInvocation(e.getDescription());
+		    		threadService.submit(tt);
 		        }
 		    }
 		});

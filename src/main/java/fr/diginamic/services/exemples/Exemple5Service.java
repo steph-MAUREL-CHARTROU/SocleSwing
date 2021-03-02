@@ -5,11 +5,14 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import fr.diginamic.composants.MenuService;
 import fr.diginamic.composants.db.SqlUtils;
+import fr.diginamic.composants.ui.Form;
+import fr.diginamic.composants.ui.TextField;
 import fr.diginamic.services.entite.Client;
 
 public class Exemple5Service extends MenuService {
@@ -56,7 +59,30 @@ public class Exemple5Service extends MenuService {
 	}
 
 	public void modifier(Long id) {
-		console.println("Modification de l'item " + id, Color.GREEN);
+		
+		EntityManager em = emf.createEntityManager();
+		Client c = em.find(Client.class, id);
+		
+		// On commence par créér le formulaire vide
+		Form form = new Form();
+				
+				// On ajoute au formulaire 2 champs de type texte.
+		form.addInput(new TextField("Nom:", "champ1", c.getNom()));
+		form.addInput(new TextField("Prénom:", "champ2", c.getPrenom()));
+		
+		boolean valide = console.input("Modification du client "+c.getPrenom()+" "+c.getNom(), form);
+		if (valide) {
+			
+			EntityTransaction transaction = em.getTransaction();
+			transaction.begin();
+			String nvNom = form.getValue("champ1");
+			String nvPrenom = form.getValue("champ2");
+			c.setNom(nvNom);
+			c.setPrenom(nvPrenom);
+			transaction.commit();
+			
+			traitement();
+		}
 	}
 
 	public void supprimer(Long id) {
