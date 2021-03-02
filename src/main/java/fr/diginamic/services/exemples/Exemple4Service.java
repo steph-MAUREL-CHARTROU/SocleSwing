@@ -13,14 +13,17 @@ public class Exemple4Service extends MenuService {
 		// Utilisation de la classe bg-green pour l'entêtete de la table
 		String html = "<table cellspacing=0>"
 				    + "   <tr class='bg-green'><td>&nbsp;</td><td>Nom</td><td>Prénom</td></tr>"
-		            + "   <tr><td><a href='exemple4Service.modifier(1)'>Modifier</a></td><td>MBAPPE</td><td>Kylian</td></tr>"
-			        + "   <tr><td><a href='exemple4Service.modifier(2)'>Modifier</a></td><td>NEYMAR</td><td>Junior</td></tr>"
-			        + "   <tr><td><a href='exemple4Service.modifier(3)'>Modifier</a></td><td>MOISE</td><td>Kean</td></tr>"
+		            + "   <tr><td><a href='modifier(1)'>Modifier</a></td><td>MBAPPE</td><td>Kylian</td></tr>"
+			        + "   <tr><td><a href='modifier(2)'>Modifier</a></td><td>NEYMAR</td><td>Junior</td></tr>"
+			        + "   <tr><td><a href='modifier(3)'>Modifier</a></td><td>MOISE</td><td>Kean</td></tr>"
 		            + "</table>";
 		console.print(html);
 	}
 
-	public void modifier(Long id) {
+	/** Méthode appelée lorsque l'utilisateur clique sur le bouton Modifier dans la table
+	 * @param id
+	 */
+	protected void modifier(Long id) {
 		console.println("Vous venez d'invoquer la méthode modifier avec l'identiant "+id);
 	}
 

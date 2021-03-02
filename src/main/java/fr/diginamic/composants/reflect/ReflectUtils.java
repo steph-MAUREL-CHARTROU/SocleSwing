@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 
 import com.google.common.reflect.ClassPath;
 
+import fr.diginamic.composants.AbstractApplication;
 import fr.diginamic.composants.error.ErrorManager;
 
 /**
@@ -52,7 +53,7 @@ public class ReflectUtils {
 	 */
 	public static void invoke(String chaineInvocation) {
 
-		if (chaineInvocation.contains(".")) {
+		if (chaineInvocation.contains(".") && chaineInvocation.contains("(") && chaineInvocation.contains(")")) {
 			String[] tokens = chaineInvocation.split("\\.");
 
 			String className = tokens[0].substring(0, 1).toUpperCase() + tokens[0].substring(1);
@@ -63,30 +64,54 @@ public class ReflectUtils {
 			Long id = Long.parseLong(parameter);
 
 			Class<?> classe = getClass(className);
-			Object obj = null;
-			try {
-				if (classe != null) {
-					Constructor<?> construct = classe.getConstructor(null);
-					if (construct != null) {
-						obj = construct.newInstance(null);
-					} else {
-						ErrorManager.manage("Le constructeur sans paramètre n'existe pas dans la classe " + className);
-					}
+			if (classe==null) {
+				ErrorManager.manage("La classe " + className + " n'existe pas.");
+			}
+			else {
+				callMethod(classe, methodName, id);
+			}
+		}
+		else if (chaineInvocation.contains("(") && chaineInvocation.contains(")")){
+			
+			String methodName = chaineInvocation.substring(0, chaineInvocation.indexOf("("));
+			String parameter = chaineInvocation.substring(chaineInvocation.indexOf("(") + 1,
+					chaineInvocation.indexOf(")"));
+			Long id = Long.parseLong(parameter);
+			
+			Class<?> classe = AbstractApplication.currentMenuService.getClass();
+			callMethod(classe, methodName, id);
+		}
+	}
+
+	/** Appel de la méthode methodName de la classe classe avec l'identifiant id
+	 * @param classe classe
+	 * @param methodName nom de la méthode
+	 * @param id identifiant
+	 */
+	private static void callMethod(Class<?> classe, String methodName, Long id) {
+		Object obj = null;
+		try {
+			if (classe != null) {
+				Constructor<?> construct = classe.getConstructor(null);
+				construct.setAccessible(true);
+				if (construct != null) {
+					obj = construct.newInstance(null);
 				} else {
-					ErrorManager.manage("La classe " + className + " n'existe pas.");
+					ErrorManager.manage("Le constructeur sans paramètre n'existe pas dans la classe " + classe.getName());
 				}
-			} catch (ReflectiveOperationException e) {
-				String msg = "Le constructeur sans paramètre est obligatoire dans la classe " + classe.getName();
-				ErrorManager.manage(msg, e);
-			}
-			try {
-				Method method = classe.getMethod(methodName, Long.class);
-				method.invoke(obj, id);
-			} catch (ReflectiveOperationException e) {
-				String msg = "La méthode " + methodName + "(Long.class) n'existe pas dans la classe "
-						+ classe.getName();
-				ErrorManager.manage(msg, e);
-			}
+			} 
+		} catch (ReflectiveOperationException e) {
+			String msg = "Le constructeur sans paramètre est obligatoire dans la classe " + classe.getName();
+			ErrorManager.manage(msg, e);
+		}
+		try {
+			Method method = classe.getDeclaredMethod(methodName, Long.class);
+			method.setAccessible(true);
+			method.invoke(obj, id);
+		} catch (ReflectiveOperationException e) {
+			String msg = "La méthode " + methodName + "(Long.class) n'existe pas dans la classe "
+					+ classe.getName();
+			ErrorManager.manage(msg, e);
 		}
 	}
 }

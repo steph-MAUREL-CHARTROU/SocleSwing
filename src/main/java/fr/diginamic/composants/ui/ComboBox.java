@@ -6,13 +6,25 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 
+/** Liste de sélection
+ * @author RichardBONNAMY
+ *
+ */
 public class ComboBox extends Input {
 
+	/** Liste des options de la liste */
 	private List<Selectable> selectables = new ArrayList<>();
-	private String value;
 	
-	public ComboBox(String name, String label, List<Selectable> selectables) {
-		super(name, label);
+	/** value */
+	private Long id;
+	
+	/** Constructeur
+	 * @param label libellé
+	 * @param name nom
+	 * @param selectables liste des options de la liste
+	 */
+	public ComboBox(String label, String name, List<Selectable> selectables) {
+		super(label, name);
 		this.selectables = selectables;
 	}
 	
@@ -28,12 +40,12 @@ public class ComboBox extends Input {
 
 	@Override
 	public String getValue() {
-		return value;
+		return Long.toString(id);
 	}
 	
 	@Override
 	public void setValue(JComponent component) {
-		this.value=((Selectable)((JComboBox<Selectable>)component).getSelectedItem()).getValue();
+		this.id=((Selectable)((JComboBox<Selectable>)component).getSelectedItem()).getId();
 	}
 
 	@Override
@@ -41,21 +53,17 @@ public class ComboBox extends Input {
 		return InputType.SELECT;
 	}
 
-	/**
+	/** Getter
 	 * @return the selectables
 	 */
 	public List<Selectable> getSelectables() {
 		return selectables;
 	}
 
-	/**
+	/** Setter
 	 * @param selectables the selectables to set
 	 */
 	public void setSelectables(List<Selectable> selectables) {
 		this.selectables = selectables;
 	}
-
-	
-
-	
 }

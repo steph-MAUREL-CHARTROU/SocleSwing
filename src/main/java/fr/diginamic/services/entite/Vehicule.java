@@ -25,12 +25,6 @@ public class Vehicule implements Selectable {
 	}
 
 	@Override
-	public String getValue() {
-		return Long.toString(id);
-	}
-	
-
-	@Override
 	public String toString() {
 		return immatriculation;
 	}

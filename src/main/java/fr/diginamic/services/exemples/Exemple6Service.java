@@ -20,14 +20,15 @@ public class Exemple6Service extends MenuService {
 		console.clear();
 		console.print("<h1 class='bg-turquoise'><center>Titre avec fond bleu clair</center></h1>");
 
+		// On commence par créér le formulaire vide
 		Form form = new Form();
 		
-		// Champ de type texte
-		form.addInput(new TextField("nom", "Nom"));
-		form.addInput(new TextField("prenom", "Prénom"));
+		// On ajoute au formulaire 2 champs de type texte.
+		form.addInput(new TextField("Nom:", "champ1"));
+		form.addInput(new TextField("Prénom:", "champ2"));
 		
 		// Champd e type date
-		form.addInput(new DateField("dateNaissance", "Date de naissance"));
+		form.addInput(new DateField("Date de naissance :", "dateNaissance"));
 		
 		
 		List<Selectable> vehicules = new ArrayList<>();
@@ -36,16 +37,19 @@ public class Exemple6Service extends MenuService {
 		vehicules.add(new Vehicule(3L, "XX-131-XT", "Peugeot", "3008"));
 		
 		// Champ de type liste de sélection
-		form.addInput(new ComboBox("vehicule", "Véhicule", vehicules));
+		form.addInput(new ComboBox("Liste de véhicules:", "vehicule", vehicules));
 
-		// Appel du formulaire.
-		boolean valide = console.input("Demande de nom", form);
+		// La méthode suivante permet d’afficher le formulaire.
+		// La méthode retourne false si l’utilisateur a cliqué sur Annuler, sinon 
+		// retourne true
+		boolean valide = console.input("Demande d'informations", form);
 
 		// Récupéation des informations saisies
 		if (valide) {
-			console.print("Vous vous <b>appelez</b> ").println("<span style='color:red'>"+form.getValue("prenom")+" "+form.getValue("nom")+"</span>");
-			console.println("Voiture sélectionnée :"+form.getValue("vehicule"));
+			console.print("Vous vous <b>appelez</b> ").println("<span style='color:red'>"+form.getValue("champ2")+" "+form.getValue("champ1")+"</span>");
 			console.println("Date de naissance :"+form.getValue("dateNaissance"));
+			console.println("Voiture sélectionnée :"+form.getValue("vehicule"));
+			
 		}
 		
 	}

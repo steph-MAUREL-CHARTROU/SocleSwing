@@ -8,14 +8,25 @@ import javax.swing.JComponent;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+/** Champ de saisie d'une date
+ * @author RichardBONNAMY
+ *
+ */
 public class DateField extends Input {
 	
+	/** Valeur saisie */
 	private String value;
+	/** format */
 	private String format;
+	/** Composant Swing associé */
 	private JXDatePicker picker;
 
-	public DateField(String name, String label) {
-		super(name, label);
+	/** Constructeur
+	 * @param label libellé
+	 * @param name nom
+	 */
+	public DateField(String label, String name) {
+		super(label, name);
 		this.format="dd/MM/yyyy";
 		setWidth(150);
 	}
@@ -49,14 +60,14 @@ public class DateField extends Input {
 		return InputType.DATEFIELD;
 	}
 
-	/**
+	/** Getter
 	 * @return the format
 	 */
 	public String getFormat() {
 		return format;
 	}
 
-	/**
+	/** Setter
 	 * @param format the format to set
 	 */
 	public void setFormat(String format) {

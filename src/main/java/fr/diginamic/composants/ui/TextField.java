@@ -3,12 +3,21 @@ package fr.diginamic.composants.ui;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
+/** Champ de type texte pour saisir une information quelconque
+ * @author RichardBONNAMY
+ *
+ */
 public class TextField extends Input {
 	
+	/** Valeur saisie par l'utilisateur */
 	private String value;
 
-	public TextField(String name, String label) {
-		super(name, label);
+	/** Constructeur
+	 * @param name nom du champ de saisie
+	 * @param label libellé du champ de saisie
+	 */
+	public TextField(String label, String name) {
+		super(label, name);
 		setWidth(150);
 	}
 	
