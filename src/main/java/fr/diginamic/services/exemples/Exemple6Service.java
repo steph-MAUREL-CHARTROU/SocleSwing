@@ -27,7 +27,7 @@ public class Exemple6Service extends MenuService {
 		form.addInput(new TextField("Nom:", "champ1"));
 		form.addInput(new TextField("Prénom:", "champ2"));
 		
-		// Champd e type date
+		// Champ de type date
 		form.addInput(new DateField("Date de naissance :", "dateNaissance"));
 		
 		
