@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-import javax.swing.JOptionPane;
-
 import com.google.common.reflect.ClassPath;
 
 import fr.diginamic.composants.error.ErrorManager;
