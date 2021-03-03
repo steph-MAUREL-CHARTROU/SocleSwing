@@ -52,9 +52,7 @@ public class Exemple6Service extends MenuService {
 			console.print("Vous vous <b>appelez</b> ").println("<span style='color:red'>"+form.getValue("champ2")+" "+form.getValue("champ1")+"</span>");
 			console.println("Date de naissance :"+form.getValue("dateNaissance"));
 			console.println("Voiture sélectionnée :"+form.getValue("vehicule"));
-			
 		}
-		
 	}
 
 	public void modifier(Long id) {

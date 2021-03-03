@@ -14,9 +14,9 @@ public class Exemple2Service extends MenuService {
 		
 		console.println("Texte");
 		console.println("Texte en rouge", Color.RED);
-		console.println("Texte en cyan", Color.CYAN);
+		console.println("Texte en cyan", Color.DARK_GRAY);
 		
-		console.println("Texte utilisant des attributs CSS", "color:#FF00CC; font-size:18px");
+		console.println("Texte utilisant des attributs CSS", "color:#AABBCC; font-size:40px");
 	}
 
 }

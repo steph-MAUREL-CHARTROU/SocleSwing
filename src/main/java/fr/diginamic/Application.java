@@ -36,9 +36,13 @@ public class Application extends AbstractApplication {
 	 */
 	public void main() {
 		addMenu(1, "File");
+		addMenu(2, "Gestion clients");
 		addMenu(3, "Exemples");
 		
 		addMenuOption(1, "Aide", new AideService());
+		
+		//addMenuOption(2, "Liste des clients", new AideService());
+		
 		addMenuOption(3, "Exemple 1 - Titres", new Exemple1Service());
 		addMenuOption(3, "Exemple 2 - Textes de couleur", new Exemple2Service());
 		addMenuOption(3, "Exemple 3 - Table", new Exemple3Service());
