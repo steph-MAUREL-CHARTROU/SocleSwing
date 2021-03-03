@@ -13,7 +13,7 @@ import fr.diginamic.composants.MenuService;
 import fr.diginamic.composants.db.SqlUtils;
 import fr.diginamic.composants.ui.Form;
 import fr.diginamic.composants.ui.TextField;
-import fr.diginamic.services.exemples.entite.Personne;
+import fr.diginamic.services.exemples.entite.Client;
 
 public class Exemple5Service extends MenuService {
 
@@ -21,8 +21,8 @@ public class Exemple5Service extends MenuService {
 
 	private void initDatabase() {
 		EntityManager em = emf.createEntityManager();
-		TypedQuery<Personne> query = em.createQuery("SELECT p FROM Personne p", Personne.class);
-		List<Personne> clients = query.getResultList();
+		TypedQuery<Client> query = em.createQuery("SELECT p FROM Personne p", Client.class);
+		List<Client> clients = query.getResultList();
 		if (clients.size()==0) {
 			SqlUtils.executeFile("exemple.sql", em);
 		}
@@ -37,15 +37,15 @@ public class Exemple5Service extends MenuService {
 
 		// Exemple
 		EntityManager em = emf.createEntityManager();
-		TypedQuery<Personne> query = em.createQuery("SELECT p FROM Personne p", Personne.class);
-		List<Personne> clients = query.getResultList();
+		TypedQuery<Client> query = em.createQuery("SELECT p FROM Personne p", Client.class);
+		List<Client> clients = query.getResultList();
 
 		console.clear();
 		console.print("<h1 class='bg-green'><center>Liste des clients</center></h1>");
 
 		String html = "<table cellspacing=0>"
 				+ "<tr class='bg-green'><td>&nbsp;</td><td>&nbsp;</td><td>Nom</td><td>Prénom</td></tr>";
-		for (Personne c : clients) {
+		for (Client c : clients) {
 			html += "<tr>"
 				  + "  <td><a class='btn-blue' href='modifier(" + c.getId() + ")'><img width=25 src='images/pencil-blue-xs.png'></a></td>"
 				  + "  <td><a class='btn-red' href='supprimer(" + c.getId() + ")'><img width=25 src='images/trash-red-xs.png'></a></td>"
@@ -65,7 +65,7 @@ public class Exemple5Service extends MenuService {
 	public void modifier(Long id) {
 		
 		EntityManager em = emf.createEntityManager();
-		Personne c = em.find(Personne.class, id);
+		Client c = em.find(Client.class, id);
 		
 		// On commence par créér le formulaire vide
 		Form form = new Form();
