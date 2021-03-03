@@ -39,10 +39,13 @@ public class Exemple6Service extends MenuService {
 		// Champ de type liste de sélection
 		form.addInput(new ComboBox("Liste de véhicules:", "vehicule", vehicules, vehicules.get(2)));
 
+		// Création d'un validator qui stocke les règles de gestion
+		Exemple6FormValidator validator = new Exemple6FormValidator();
+		
 		// La méthode suivante permet d’afficher le formulaire.
 		// La méthode retourne false si l’utilisateur a cliqué sur Annuler, sinon 
 		// retourne true
-		boolean valide = console.input("Demande d'informations", form);
+		boolean valide = console.input("Demande d'informations", form, validator);
 
 		// Récupéation des informations saisies
 		if (valide) {

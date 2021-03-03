@@ -18,7 +18,8 @@ public class TextField extends Input {
 	 */
 	public TextField(String label, String name) {
 		super(label, name);
-		setWidth(150);
+		this.value="";
+		setWidth(200);
 	}
 	
 	/** Constructeur
@@ -29,7 +30,7 @@ public class TextField extends Input {
 	public TextField(String label, String name, String value) {
 		super(label, name);
 		this.value = value;
-		setWidth(150);
+		setWidth(200);
 	}
 	
 

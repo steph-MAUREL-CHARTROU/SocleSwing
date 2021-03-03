@@ -58,6 +58,10 @@ public class Exemple5Service extends MenuService {
 		console.print(html);
 	}
 
+	/** Méthode appelée lorsque l'utilisateur clique sur une icone de modification
+	 * dans la table des clients.
+	 * @param id identifiant du client à modifier.
+	 */
 	public void modifier(Long id) {
 		
 		EntityManager em = emf.createEntityManager();
@@ -71,9 +75,9 @@ public class Exemple5Service extends MenuService {
 		form.addInput(new TextField("Prénom:", "champ2", c.getPrenom()));
 		
 		// Les règles métier sont vérifiées dans le validator
-		form.setValidator(new Exemple5FormValidator());
+		Exemple5FormValidator validator = new Exemple5FormValidator();
 		
-		boolean valide = console.input("Modification du client "+c.getPrenom()+" "+c.getNom(), form);
+		boolean valide = console.input("Modification du client "+c.getPrenom()+" "+c.getNom(), form, validator);
 		if (valide) {
 			
 			EntityTransaction transaction = em.getTransaction();
@@ -88,8 +92,13 @@ public class Exemple5Service extends MenuService {
 		}
 	}
 
+	/** Méthode appelée lorsque l'utilisateur clique sur une icone de suppression
+	 * dans la table des clients
+	 * @param id identifiant du client à supprimer.
+	 */
 	public void supprimer(Long id) {
-		console.println("Suppression de l'item " + id, Color.RED);
+		boolean result = console.confirm("Suppression de l'item " + id, "Confirmez-vous la suppression de l'item n°"+id);
+		console.println(""+result);
 	}
 
 }

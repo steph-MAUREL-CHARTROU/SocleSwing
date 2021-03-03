@@ -28,6 +28,7 @@ import fr.diginamic.Launcher;
 import fr.diginamic.composants.html.HtmlUtils;
 import fr.diginamic.composants.ui.Form;
 import fr.diginamic.composants.ui.Input;
+import fr.diginamic.composants.validator.FormValidator;
 
 /**
  * Classe qui propose quelques méthodes pour construire des composants
@@ -99,7 +100,7 @@ public class Console {
 	 * @param form formulaire
 	 * @return boolean
 	 */
-	public boolean input(String titreFormulaire, Form form) {
+	public boolean input(String titreFormulaire, final Form form, final FormValidator formValidator) {
 
 		JFrame fenetreRecherche = new JFrame(titreFormulaire);
 
@@ -131,7 +132,7 @@ public class Console {
 			int nbCaracteres = input.getLabel().length();
 
 			// Largeur approximative en pixels du texte à afficher
-			int largeurLabel = nbCaracteres * 10;
+			int largeurLabel = nbCaracteres * 10 + 100;
 
 			// Recherche du texte le plus large parmi tous les textes des questions
 			if (largeurLabel > maxLabelWidth) {
@@ -179,11 +180,13 @@ public class Console {
 
 		// Création du bouton Valider
 		
-		JButton annuler = new JButton("Annuler");
+		JButton annuler = new JButton("Annul.");
 		annuler.setBounds((maxWidth-170)/2, 40 + 40 * (form.size() - 1), 75, 25);
+		annuler.setBackground(new Color(248, 215, 218));
 		
 		JButton valider = new JButton("Valider");
 		valider.setBounds((maxWidth-170)/2+95, 40 + 40 * (form.size() - 1), 75, 25);
+		valider.setBackground(new Color(0, 195, 255));
 		
 		// Lorsqu'on clique sur le bouton Valider on lance un système pour attendre la
 		// saisie
@@ -211,13 +214,111 @@ public class Console {
 						Input input = form.getInput(name);
 						input.setValue(fields.get(name));
 					}
-					if (form.getValidator()==null || (form.getValidator()!=null && form.getValidator().validate(form))) {
+					if (formValidator==null || (formValidator!=null && formValidator.validate(form))) {
 						fenetreRecherche.setVisible(false);
 						Launcher.holder.add(true);
 						Launcher.holder.notify();
 					}
 				}
 				
+			}
+		});
+		fenetreRecherche.add(annuler);
+		fenetreRecherche.add(valider);
+		fenetreRecherche.getRootPane().setDefaultButton(valider);
+		fenetreRecherche.setVisible(true);
+
+		synchronized (Launcher.holder) {
+			// wait for input from field
+			while (Launcher.holder.isEmpty()) {
+				try {
+					Launcher.holder.wait();
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			return Launcher.holder.remove(0);
+		}
+	}
+	
+	/** Permet d'activer un formulaire SWING.
+	 * La méthode est synchrone, c'est à dire que la méthode ne rend la main que lorsque le
+	 * formateur a cliqué sur Valider (return true) ou Annuler (return false).
+	 * 
+	 * @param titreFenetre titre du formulaire
+	 * @param form formulaire
+	 * @return boolean
+	 */
+	public boolean confirm(String titreFenetre, String question) {
+
+		JFrame fenetreRecherche = new JFrame(titreFenetre);
+
+		// Lorsqu'on ferme une fenêtre secondaire on ne souhaite pas arrêter
+		// l'application
+		// mais simplement la masquer.
+		fenetreRecherche.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		// Dans chaque fenêtre secondaire les composants graphiques seront positionnés
+		// en coordonnées x,y d'où la suppression du layout
+		fenetreRecherche.getContentPane().setLayout(null);
+
+		// Par défaut les fenêtres secondaires ne sont pas visibles.
+		fenetreRecherche.setVisible(false);
+
+		int maxWidth = question.length() * 12;
+
+		// Calcul de son positionnement par défaut et de ses dimensions.
+		// La hauteur dépend notamment du nombre de questions qu'on a à poser
+		// à l'utilisateur
+
+		fenetreRecherche.setBounds(100, 100, maxWidth, 120);
+		// Calcul des coordonnées x et y pour que la fenêtre secondaire soit centrée.
+		int x = Console.getX(fenetreRecherche);
+		int y = Console.getY(fenetreRecherche);
+		fenetreRecherche.setLocation(x, y);
+
+		JLabel label = new JLabel(question);
+		label.setBounds(10, 18, maxWidth, 20);
+		label.setFont(FONT_14);
+		fenetreRecherche.add(label);
+
+		// Création du bouton Valider
+		
+		JButton annuler = new JButton("Annul.");
+		annuler.setBounds((maxWidth-170)/2, 50, 75, 25);
+		annuler.setBackground(new Color(248, 215, 218));
+		
+		JButton valider = new JButton("Valider");
+		valider.setBounds((maxWidth-170)/2+95, 50, 75, 25);
+		valider.setBackground(new Color(0, 195, 255));
+		
+		// Lorsqu'on clique sur le bouton Valider on lance un système pour attendre la
+		// saisie
+		// par l'utilisateur de la valeur demandée.
+		annuler.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				synchronized (Launcher.holder) {
+
+					Launcher.holder.add(false);
+					Launcher.holder.notify();
+				}
+				fenetreRecherche.setVisible(false);
+			}
+		});
+
+		// Lorsqu'on clique sur le bouton Valider on lance un système pour attendre la
+		// saisie
+		// par l'utilisateur de la valeur demandée.
+		valider.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				synchronized (Launcher.holder) {
+					Launcher.holder.add(true);
+					Launcher.holder.notify();
+					
+				}
+				fenetreRecherche.setVisible(false);
 			}
 		});
 		fenetreRecherche.add(annuler);

@@ -17,9 +17,6 @@ public class Form implements Iterable<Input> {
 	/** Liste des champs de saisie */
 	private List<Input> inputs = new ArrayList<>();
 	
-	/** Validator */
-	private FormValidator validator;
-	
 	/** Retourne un champ de saisie à partir de son nom
 	 * @param name nom du champ
 	 * @return {@link Input}
@@ -77,19 +74,5 @@ public class Form implements Iterable<Input> {
 	 */
 	public void setInputs(List<Input> inputs) {
 		this.inputs = inputs;
-	}
-
-	/** Getter
-	 * @return the validator
-	 */
-	public FormValidator getValidator() {
-		return validator;
-	}
-
-	/** Setter
-	 * @param validator the validator to set
-	 */
-	public void setValidator(FormValidator validator) {
-		this.validator = validator;
 	}
 }
