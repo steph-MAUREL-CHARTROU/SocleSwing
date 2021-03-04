@@ -1,6 +1,13 @@
-package fr.diginamic.services.exemples.entite;
+package fr.diginamic.entite;
 
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -11,11 +18,26 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "type_vehicule")
 public class TypeVehicule {
-
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int idTypeVehicule;
+	
+	@Column (name = "type_vehicule")
 	String nomTypeVehicule;
+	
+	@Column (name = "tarif_jour ")
 	Double tarifJour;
+	
+	@Column (name= "montant_caution")
 	int montantCaution;
+	
+	@OneToMany (mappedBy = "typeVehiculeVoiture")
+	private List <Voiture> voiture;
+	
+	@OneToMany(mappedBy = "typeVehiculeCamion")
+	private List <Camion> camion;
+	
 
 	public TypeVehicule() {
 

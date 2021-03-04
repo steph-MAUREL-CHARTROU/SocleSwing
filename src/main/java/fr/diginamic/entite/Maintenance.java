@@ -1,9 +1,17 @@
-package fr.diginamic.services.exemples.entite;
+package fr.diginamic.entite;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+
 
 /**
  * 
@@ -14,10 +22,20 @@ import javax.persistence.Table;
 @Table(name = "maintenance")
 public class Maintenance {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int idMaintenance;
+	@Column ( name=" date_entree")
 	Date dateEntree;
+	@Column ( name =" date_sortie")
 	Date dateSortie;
+	
+	@Column ( name="montant_intervention")
 	Double montantIntervention;
+	
+	@ManyToOne
+	@JoinColumn ( name="vehicule_maintenance")
+	private Vehicule vehiculeMaintenance;
 
 	public Maintenance() {
 

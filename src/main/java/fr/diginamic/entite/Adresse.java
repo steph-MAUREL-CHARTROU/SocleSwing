@@ -1,4 +1,4 @@
-package fr.diginamic.services.exemples.entite;
+package fr.diginamic.entite;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
@@ -9,9 +9,9 @@ import javax.persistence.Table;
  * @author StephanieMC
  *
  */
-@Entity
 @Embeddable
 public class Adresse {
+	
 	
 	int numRue;
 	String libelleRue;

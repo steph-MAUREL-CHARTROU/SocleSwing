@@ -1,8 +1,9 @@
-package fr.diginamic.services.exemples.entite;
+package fr.diginamic.entite;
 
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -17,24 +18,37 @@ import org.hibernate.annotations.ManyToAny;
 @Entity
 @Table(name = "permis_conduire")
 public class PermisDeConduire {
+	
+	@Id
+	int idPermis;
 
 	int NumPermis;
 	String type;
 	Date dateObtention;
 	
 	@ManyToOne
-	@JoinColumn(name="permis_de_conduire")
+	@JoinColumn(name="id_client")
 	private Client client;
 
 	public PermisDeConduire() {
 
 	}
 
-	public PermisDeConduire(int numPermis, String type, Date dateObtention) {
+	public PermisDeConduire(int idPermis, int numPermis, String type, Date dateObtention, Client client) {
 		super();
+		this.idPermis = idPermis;
 		NumPermis = numPermis;
 		this.type = type;
 		this.dateObtention = dateObtention;
+		this.client = client;
+	}
+
+	public int getIdPermis() {
+		return idPermis;
+	}
+
+	public void setIdPermis(int idPermis) {
+		this.idPermis = idPermis;
 	}
 
 	public int getNumPermis() {
@@ -61,4 +75,13 @@ public class PermisDeConduire {
 		this.dateObtention = dateObtention;
 	}
 
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	
 }

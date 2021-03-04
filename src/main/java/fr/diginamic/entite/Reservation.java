@@ -1,4 +1,4 @@
-package fr.diginamic.services.exemples.entite;
+package fr.diginamic.entite;
 
 import java.util.Date;
 
@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -36,15 +37,22 @@ public class Reservation {
 	int KmFin;
 	
 	@Column ( name = "commentaires")
+	String commentaire;
 	
 	@ManyToOne
 	@JoinColumn(name="client_resa")
 	private Client client;
 	
+	@ManyToOne
+	@JoinColumn ( name = "vehicule-resa")
+	private Vehicule vehicule;
 	
-	//ICI 
 	
-	String commentaire;
+	@OneToOne
+	@JoinColumn ( name= " resa_facture")
+	private Facture facture;
+	
+	
 
 	public Reservation() {
 

@@ -1,4 +1,4 @@
-package fr.diginamic.services.exemples.entite;
+package fr.diginamic.entite;
 
 import java.util.List;
 
@@ -36,12 +36,12 @@ public class Client {
 	
 	@OneToMany
 	@JoinColumn( name = "reservation_client")
-	private Reservation reservation;
+	private List<Reservation> reservation;
 	
 	@Embedded
 	private Adresse adresse;
 	
-	@OneToMany( mappedBy = "permis_de_conduire")
+	@OneToMany( mappedBy = "client")
 	private List<PermisDeConduire> permisconduire;
 	
 	
