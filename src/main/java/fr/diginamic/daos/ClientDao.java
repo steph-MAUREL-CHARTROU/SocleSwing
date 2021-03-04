@@ -8,6 +8,11 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import fr.diginamic.entite.Client;
+/**
+ * 
+ * @author StephanieMC
+ *
+ */
 
 public class ClientDao extends AbstractDao {
 
