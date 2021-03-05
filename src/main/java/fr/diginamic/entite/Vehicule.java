@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 
-@Table ( name=" vehicule")
+@Table ( name="vehicule")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Vehicule {
 	
@@ -33,7 +33,7 @@ public class Vehicule {
 	@Column ( name ="kilometrage")
 	private int kilometrage;
 	
-	@Column ( name = " statut_vehicule")
+	@Column ( name = "statut_vehicule")
 	private String statutVehicule;
 	
 	@OneToMany( mappedBy = "vehicule")

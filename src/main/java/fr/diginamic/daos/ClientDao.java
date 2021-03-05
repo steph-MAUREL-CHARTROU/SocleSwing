@@ -17,15 +17,16 @@ import fr.diginamic.entite.Client;
 public class ClientDao extends AbstractDao {
 
 	private static EntityManager em = AbstractDao.emf.createEntityManager();
-	private static EntityTransaction transaction = em.getTransaction();
+	
 
 	public ClientDao() {
 
 	}
 
-	public static void insertClient(Client client) {
-
-		Query query = em.createQuery(" SELECT client FROM Client client WHERE client.nom= ?1");
+	public void insertClient(Client client) {
+		
+		EntityTransaction transaction = em.getTransaction();
+		TypedQuery<Client> query = em.createQuery(" SELECT client FROM Client client WHERE client.nom= ?1", Client.class);
 		query.setParameter(1, client.getNom());
 
 		List<Client> clientList = query.getResultList();
@@ -43,24 +44,25 @@ public class ClientDao extends AbstractDao {
 
 	}
 
-	public Client findById(Long long1) {
+	public static Client findById(Long long1) {
 
 		return em.find(Client.class, long1);
 
 	}
 
-	public List<Client> findAllClients() {
+	public static List<Client> findAllClients() {
 
 		TypedQuery<Client> query = em.createQuery(" SELECT client FROM Client client", Client.class);
 		return query.getResultList();
 
 	}
 
-	public void updateClient(Client client) {
+	public static Client updateClient(Client client) {
 
 		Client clientToUpdate = findById(client.getIdClient());
 		clientToUpdate.setPrenom(client.getPrenom());
 		clientToUpdate.setNom(client.getNom());
+		return clientToUpdate;
 	}
 
 	public void deleteClient(Client client) {

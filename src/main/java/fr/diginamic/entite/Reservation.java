@@ -44,12 +44,12 @@ public class Reservation {
 	private Client client;
 	
 	@ManyToOne
-	@JoinColumn ( name = "vehicule-resa")
+	@JoinColumn ( name = "vehicule_resa")
 	private Vehicule vehicule;
 	
 	
 	@OneToOne
-	@JoinColumn ( name= " resa_facture")
+	@JoinColumn ( name= "resa_facture")
 	private Facture facture;
 	
 	

@@ -1,6 +1,8 @@
 package fr.diginamic;
 
 import fr.diginamic.composants.AbstractApplication;
+import fr.diginamic.service.gestion.GestionAjoutClients;
+import fr.diginamic.service.gestion.ListClients;
 import fr.diginamic.services.exemples.AideService;
 import fr.diginamic.services.exemples.Exemple1Service;
 import fr.diginamic.services.exemples.Exemple2Service;
@@ -41,7 +43,11 @@ public class Application extends AbstractApplication {
 		
 		addMenuOption(1, "Aide", new AideService());
 		
-		//addMenuOption(2, "Liste des clients", new AideService());
+		addMenuOption(2, "Liste des clients", new ListClients());
+		addMenuOption(2, "Nouveau client", new GestionAjoutClients());
+		addMenuOption(2, "Modifier", new AideService());
+		addMenuOption(2, "Supprimer", new AideService());
+		
 		
 		addMenuOption(3, "Exemple 1 - Titres", new Exemple1Service());
 		addMenuOption(3, "Exemple 2 - Textes de couleur", new Exemple2Service());

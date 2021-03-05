@@ -6,32 +6,40 @@ import fr.diginamic.composants.ui.TextField;
 import fr.diginamic.daos.ClientDao;
 import fr.diginamic.entite.Client;
 
-public class GestionClients extends MenuService {
+/**
+ * 
+ * @author StephanieMC
+ *
+ */
+
+public class GestionAjoutClients extends MenuService {
+
 	
-	
+	private ClientDao clientDao = new ClientDao();
+
 	public void traitement() {
-		
+
 		console.clear();
-		
+
 		Form addClient = new Form();
-		
-		addClient.addInput(new TextField("Nom :","nomClient"));
-		addClient.addInput(new TextField("Prenom :","prenomClient"));
-		
+
+		addClient.addInput(new TextField("Nom :", "nomClient"));
+		addClient.addInput(new TextField("Prenom :", "prenomClient"));
+
 		ValidatorClientForm validateFormClient = new ValidatorClientForm();
-		
-		boolean valide = console.input( "INFORMATIONS", addClient, validateFormClient);
-		
+
+		boolean valide = console.input("demande d'informations", addClient, validateFormClient);
+
 		String prenom = addClient.getValue("prenomClient");
 		String nom = addClient.getValue("nomClient");
-		
+
 		Client clientToAdd = new Client();
-		
+
 		clientToAdd.setNom(nom);
 		clientToAdd.setPrenom(prenom);
-		
-		
-		ClientDao.insertClient(clientToAdd);
+
+		clientDao.insertClient(clientToAdd);
+
 	}
 
 }

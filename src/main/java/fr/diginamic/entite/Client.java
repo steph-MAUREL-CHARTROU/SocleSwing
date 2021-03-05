@@ -49,9 +49,8 @@ public class Client {
 		
 	}
 
-	public Client(Long idClient, String nom, String prenom) {
+	public Client( String nom, String prenom) {
 		super();
-		this.idClient = idClient;
 		this.nom = nom;
 		this.prenom = prenom;
 	}

@@ -7,8 +7,8 @@ public class ValidatorClientForm extends FormValidator {
 
 	@Override
 	public boolean validate(Form form) {
-		String nvNom = form.getValue("cham");
-		String nvPrenom = form.getValue("champ2");
+		String nvNom = form.getValue("nomClient");
+		String nvPrenom = form.getValue("prenomClient");
 
 		if (nvNom.trim().isEmpty()) {
 			console.alert("Le nom est obligatoire !");
@@ -17,7 +17,7 @@ public class ValidatorClientForm extends FormValidator {
 			console.alert("Le prénom est obligatoire !");
 			return false;
 		}
-		return false;
+		return true;
 
 	}
 

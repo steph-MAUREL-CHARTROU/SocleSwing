@@ -1,5 +1,6 @@
 package fr.diginamic.entite;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -12,11 +13,15 @@ import javax.persistence.Table;
 @Embeddable
 public class Adresse {
 	
-	
+	@Column ( nullable = true)
 	int numRue;
+	@Column ( nullable = true)
 	String libelleRue;
+	@Column ( nullable = true)
 	int codePostal;
+	@Column ( nullable = true)
 	String numTel;
+	@Column ( nullable = true)
 	String email;
 	
 	

@@ -9,7 +9,7 @@ import javax.persistence.EntityTransaction;
  *
  */
 
-public class Adresse extends AbstractDao {
+public class AdresseDao extends AbstractDao {
 
 	private static EntityManager em = AbstractDao.emf.createEntityManager();
 	private static EntityTransaction transaction = em.getTransaction();
@@ -20,12 +20,12 @@ public class Adresse extends AbstractDao {
 
 	}
 	
-	public Adresse findAdressById ( int id) {
+	public AdresseDao findAdressById ( int id) {
 		
-		return em.find( Adresse.class, id);
+		return em.find( AdresseDao.class, id);
 	}
 	
-	public  void UpdateAdress( Adresse adresse) {
+	public  void UpdateAdress( AdresseDao adresse) {
 		
 	
 		
