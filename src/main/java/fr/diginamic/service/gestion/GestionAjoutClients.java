@@ -3,6 +3,7 @@ package fr.diginamic.service.gestion;
 import fr.diginamic.composants.MenuService;
 import fr.diginamic.composants.ui.Form;
 import fr.diginamic.composants.ui.TextField;
+import fr.diginamic.composants.validator.ValidatorClientForm;
 import fr.diginamic.daos.ClientDao;
 import fr.diginamic.entite.Client;
 

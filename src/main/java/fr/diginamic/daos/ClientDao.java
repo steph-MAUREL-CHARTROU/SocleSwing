@@ -57,12 +57,12 @@ public class ClientDao extends AbstractDao {
 
 	}
 
-	public static Client updateClient(Client client) {
+	public static void updateClient(Client client) {
 
 		Client clientToUpdate = findById(client.getIdClient());
 		clientToUpdate.setPrenom(client.getPrenom());
 		clientToUpdate.setNom(client.getNom());
-		return clientToUpdate;
+		
 	}
 
 	public void deleteClient(Client client) {

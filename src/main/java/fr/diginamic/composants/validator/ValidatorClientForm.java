@@ -1,7 +1,6 @@
-package fr.diginamic.service.gestion;
+package fr.diginamic.composants.validator;
 
 import fr.diginamic.composants.ui.Form;
-import fr.diginamic.composants.validator.FormValidator;
 
 public class ValidatorClientForm extends FormValidator {
 
