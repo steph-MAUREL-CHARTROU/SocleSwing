@@ -23,7 +23,7 @@ public class ClientDao extends AbstractDao {
 
 	}
 
-	public void insertClient(Client client) {
+	public static void insertClient(Client client) {
 
 		Query query = em.createQuery(" SELECT client FROM Client client WHERE client.nom= ?1");
 		query.setParameter(1, client.getNom());
@@ -63,7 +63,7 @@ public class ClientDao extends AbstractDao {
 		clientToUpdate.setNom(client.getNom());
 	}
 
-	public void delete(Client client) {
+	public void deleteClient(Client client) {
 		
 		Client clientToDelete = findById(client.getIdClient());
 		em.remove( clientToDelete);
