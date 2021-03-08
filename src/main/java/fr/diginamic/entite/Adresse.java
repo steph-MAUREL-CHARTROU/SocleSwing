@@ -1,3 +1,4 @@
+
 package fr.diginamic.entite;
 
 import javax.persistence.Column;

@@ -55,6 +55,14 @@ public class Client {
 		this.prenom = prenom;
 	}
 
+	public Adresse getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(Adresse adresse) {
+		this.adresse = adresse;
+	}
+
 	public Long getIdClient() {
 		return idClient;
 	}

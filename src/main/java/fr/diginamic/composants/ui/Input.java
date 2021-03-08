@@ -24,12 +24,12 @@ public abstract class Input {
 
 	/** Constructeur
 	 * @param label libellé du champ de saisie
-	 * @param name nom du champ de saisie
+	 * @param string nom du champ de saisie
 	 */
-	public Input(String label, String name) {
+	public Input(String label, String string) {
 		super();
 		this.label = label;
-		this.name = name;
+		this.name = string;
 	}
 	
 	@Override
