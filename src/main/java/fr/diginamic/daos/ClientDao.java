@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import fr.diginamic.entite.Client;
+
 /**
  * 
  * @author StephanieMC
@@ -16,17 +17,17 @@ import fr.diginamic.entite.Client;
 
 public class ClientDao extends AbstractDao {
 
-	private static EntityManager em = AbstractDao.emf.createEntityManager();
-	
+	private EntityManager em = AbstractDao.emf.createEntityManager();
 
 	public ClientDao() {
 
 	}
 
 	public void insertClient(Client client) {
-		
+
 		EntityTransaction transaction = em.getTransaction();
-		TypedQuery<Client> query = em.createQuery(" SELECT client FROM Client client WHERE client.nom= ?1", Client.class);
+		TypedQuery<Client> query = em.createQuery(" SELECT client FROM Client client WHERE client.nom= ?1",
+				Client.class);
 		query.setParameter(1, client.getNom());
 
 		List<Client> clientList = query.getResultList();
@@ -44,31 +45,48 @@ public class ClientDao extends AbstractDao {
 
 	}
 
-	public static Client findById(Long long1) {
+	public Client findById(Long long1) {
 
 		return em.find(Client.class, long1);
 
 	}
 
-	public static List<Client> findAllClients() {
+	public  List<Client> findAllClients() {
 
 		TypedQuery<Client> query = em.createQuery(" SELECT client FROM Client client", Client.class);
 		return query.getResultList();
 
 	}
 
-	public static void updateClient(Client client) {
+	public void updateClient(Client client) {
+		
+		EntityTransaction transaction = em.getTransaction();
+
+
+		transaction.begin();
 
 		Client clientToUpdate = findById(client.getIdClient());
 		clientToUpdate.setPrenom(client.getPrenom());
 		clientToUpdate.setNom(client.getNom());
 		
+		transaction.commit();
+		
+		System.out.println(" modification ok ");
+
 	}
 
-	public void deleteClient(Client client) {
+	public void deleteClient(Client client ) {
+		
+		EntityTransaction transaction = em.getTransaction();
+		
+		transaction.begin();
 		
 		Client clientToDelete = findById(client.getIdClient());
 		em.remove( clientToDelete);
+		
+		transaction.commit();
 
 	}
+
 }
+
