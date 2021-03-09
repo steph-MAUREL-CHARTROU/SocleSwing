@@ -2,6 +2,7 @@ package fr.diginamic;
 
 import fr.diginamic.composants.AbstractApplication;
 import fr.diginamic.service.gestion.GestionAjoutClients;
+import fr.diginamic.service.gestion.GestionAjoutVoiture;
 import fr.diginamic.service.gestion.ListClients;
 import fr.diginamic.services.exemples.AideService;
 import fr.diginamic.services.exemples.Exemple1Service;
@@ -37,11 +38,13 @@ public class Application extends AbstractApplication {
 	 * 
 	 */
 	public void main() {
-		addMenu(1, "File");
+		addMenu(1, "Gestion Parc Roulant");
 		addMenu(2, "Gestion clients");
 		addMenu(3, "Exemples");
 		
-		addMenuOption(1, "Aide", new AideService());
+		addMenuOption(1, "Liste des voitures", new AideService());
+		addMenuOption(1, "Ajout nouvelle Voiture", new GestionAjoutVoiture());
+		addMenuOption(1, "Ajout nouveau Camion", new AideService());
 		
 		addMenuOption(2, "Liste des clients", new ListClients());
 		addMenuOption(2, "Nouveau client", new GestionAjoutClients());

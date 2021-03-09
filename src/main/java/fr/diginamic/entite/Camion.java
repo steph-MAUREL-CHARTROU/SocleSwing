@@ -26,11 +26,9 @@ public class Camion extends Vehicule {
 	@JoinColumn (name = "camion_type")
 	private TypeVehicule typeVehiculeCamion;
 
-	public Camion(String immatriculation, String marque, String modele, int idCamion, int volume,
-			TypeVehicule typeVehicule) {
-		super(volume, immatriculation, marque, volume, modele);
+	public Camion( int volume) {
+		
 		this.volume = volume;
-		this.typeVehiculeCamion = typeVehicule;
 	}
 
 	public int getVolume() {

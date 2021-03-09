@@ -22,19 +22,19 @@ public class Vehicule {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int idVehicule;
+	protected int idVehicule;
 	
 	@Column ( name = " modele_vehicule")
-	private String modeleVehicule;
+	protected String modeleVehicule;
 	
 	@Column ( name = "immatriculation")
-	private String immatriculation;
+	protected String immatriculation;
 	
 	@Column ( name ="kilometrage")
-	private int kilometrage;
+	protected int kilometrage;
 	
 	@Column ( name = "statut_vehicule")
-	private String statutVehicule;
+	protected String statutVehicule;
 	
 	@OneToMany( mappedBy = "vehicule")
 	private List<Reservation> reservation;
@@ -46,14 +46,68 @@ public class Vehicule {
 		
 	}
 
-	public Vehicule(int idVehicule, String modeleVehicule, String immatriculation, int kilometrage,
+	public Vehicule(String modeleVehicule, String immatriculation, int kilometrage,
 			String statutVehicule) {
-		super();
-		this.idVehicule = idVehicule;
 		this.modeleVehicule = modeleVehicule;
 		this.immatriculation = immatriculation;
 		this.kilometrage = kilometrage;
 		this.statutVehicule = statutVehicule;
+	}
+
+	public int getIdVehicule() {
+		return idVehicule;
+	}
+
+	public void setIdVehicule(int idVehicule) {
+		this.idVehicule = idVehicule;
+	}
+
+	public String getModeleVehicule() {
+		return modeleVehicule;
+	}
+
+	public void setModeleVehicule(String modeleVehicule) {
+		this.modeleVehicule = modeleVehicule;
+	}
+
+	public String getImmatriculation() {
+		return immatriculation;
+	}
+
+	public void setImmatriculation(String immatriculation) {
+		this.immatriculation = immatriculation;
+	}
+
+	public int getKilometrage() {
+		return kilometrage;
+	}
+
+	public void setKilometrage(int kilometrage) {
+		this.kilometrage = kilometrage;
+	}
+
+	public String getStatutVehicule() {
+		return statutVehicule;
+	}
+
+	public void setStatutVehicule(String statutVehicule) {
+		this.statutVehicule = statutVehicule;
+	}
+
+	public List<Reservation> getReservation() {
+		return reservation;
+	}
+
+	public void setReservation(List<Reservation> reservation) {
+		this.reservation = reservation;
+	}
+
+	public List<Maintenance> getMaintenance() {
+		return maintenance;
+	}
+
+	public void setMaintenance(List<Maintenance> maintenance) {
+		this.maintenance = maintenance;
 	}
 	
 	

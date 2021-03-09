@@ -1,3 +1,4 @@
+
 package fr.diginamic.entite;
 
 import java.util.List;
@@ -43,9 +44,8 @@ public class TypeVehicule {
 
 	}
 
-	public TypeVehicule(int idTypeVehicule, String nomTypeVehicule, Double tarifJour, int montantCaution) {
+	public TypeVehicule( String nomTypeVehicule, Double tarifJour, int montantCaution) {
 		super();
-		this.idTypeVehicule = idTypeVehicule;
 		this.nomTypeVehicule = nomTypeVehicule;
 		this.tarifJour = tarifJour;
 		this.montantCaution = montantCaution;

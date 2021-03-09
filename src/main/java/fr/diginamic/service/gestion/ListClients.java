@@ -28,9 +28,6 @@ public class ListClients extends MenuService {
 		console.println("<h1 class='bg-green'><center>Liste des clients</center></h1>");
 		ClientDao clientDao = new ClientDao();
 
-//		ClientDao.findAllClients();
-//		TypedQuery<Client> query = em.createQuery(" SELECT client FROM Client client", Client.class);
-
 		List<Client> clients = clientDao.findAllClients();
 		String html = "<table cellspacing=0 class='table'>"
 				+ "<tr class='bg-green'><td>&nbsp;</td><td>&nbsp;</td><td>Nom</td><td>Prénom</td></tr>";

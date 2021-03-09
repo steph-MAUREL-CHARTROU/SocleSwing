@@ -53,7 +53,7 @@ public class ClientDao extends AbstractDao {
 
 	public  List<Client> findAllClients() {
 
-		TypedQuery<Client> query = em.createQuery(" SELECT client FROM Client client", Client.class);
+		TypedQuery<Client> query = em.createQuery(" SELECT voiture FROM Voiture client", Client.class);
 		return query.getResultList();
 
 	}

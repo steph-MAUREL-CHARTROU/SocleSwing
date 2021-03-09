@@ -32,13 +32,19 @@ public class Voiture extends Vehicule{
 		
 	}
 
-	public Voiture(int idVoiture, int nombrePlace, TypeVehicule typeVehicule) {
-		super();
-		
+	public Voiture(
+			String modeleVehicule, 
+			String immatriculation,
+			int kilometrage,
+			String statutVehicule,
+			int nombrePlace)
+	{
+		this.modeleVehicule = modeleVehicule;
+		this.immatriculation = immatriculation;
+		this.kilometrage = kilometrage;
+		this.statutVehicule = statutVehicule;
 		this.nombrePlace = nombrePlace;
-		this.typeVehiculeVoiture = typeVehicule;
 	}
-
 
 	public int getNombrePlace() {
 		return nombrePlace;
@@ -46,6 +52,38 @@ public class Voiture extends Vehicule{
 
 	public void setNombrePlace(int nombrePlace) {
 		this.nombrePlace = nombrePlace;
+	}
+	
+	public String getModeleVehicule() {
+		return modeleVehicule;
+	}
+
+	public void setModeleVehicule(String modeleVehicule) {
+		this.modeleVehicule = modeleVehicule;
+	}
+
+	public String getImmatriculation() {
+		return immatriculation;
+	}
+
+	public void setImmatriculation(String immatriculation) {
+		this.immatriculation = immatriculation;
+	}
+
+	public int getKilometrage() {
+		return kilometrage;
+	}
+
+	public void setKilometrage(int kilometrage) {
+		this.kilometrage = kilometrage;
+	}
+
+	public String getStatutVehicule() {
+		return statutVehicule;
+	}
+
+	public void setStatutVehicule(String statutVehicule) {
+		this.statutVehicule = statutVehicule;
 	}
 
 	public TypeVehicule getTypeVehicule() {
